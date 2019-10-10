@@ -31,7 +31,7 @@ class WeatherActivity : AppCompatActivity() {
         //观察livedata
         mModel.getWeather().observe(this, observer)
 
-        mModel.launchDataLoad()
+//        mModel.launchDataLoad()
 
 
     }

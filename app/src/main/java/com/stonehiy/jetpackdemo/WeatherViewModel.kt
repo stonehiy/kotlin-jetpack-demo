@@ -79,8 +79,7 @@ class WeatherViewModel : ViewModel() {
 
     private val mWeather: MutableLiveData<ResultEntity<List<Author>>> by lazy {
         MutableLiveData<ResultEntity<List<Author>>>().also {
-            //            launchDataLoad()
-            Log.i(TAG, "----------mWeather-------------")
+            launchDataLoad()
         }
 
     }
