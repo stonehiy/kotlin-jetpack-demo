@@ -5,8 +5,11 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.stonehiy.jetpackdemo.entity.WeatherEntity
-import kotlinx.coroutines.*
+import com.stonehiy.jetpackdemo.entity.Author
+import com.stonehiy.jetpackdemo.entity.ResultEntity
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 import java.lang.Exception
 
 /**
@@ -74,16 +77,16 @@ class WeatherViewModel : ViewModel() {
     }
 
 
-    private val mWeather: MutableLiveData<WeatherEntity> by lazy {
-        MutableLiveData<WeatherEntity>().also {
-//            launchDataLoad()
+    private val mWeather: MutableLiveData<ResultEntity<List<Author>>> by lazy {
+        MutableLiveData<ResultEntity<List<Author>>>().also {
+            //            launchDataLoad()
             Log.i(TAG, "----------mWeather-------------")
         }
 
     }
 
 
-    fun getWeather(): LiveData<WeatherEntity> {
+    fun getWeather(): LiveData<ResultEntity<List<Author>>> {
         return mWeather
     }
 

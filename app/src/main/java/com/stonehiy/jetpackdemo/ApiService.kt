@@ -1,6 +1,7 @@
 package com.stonehiy.jetpackdemo
 
-import com.stonehiy.jetpackdemo.entity.WeatherEntity
+import com.stonehiy.jetpackdemo.entity.Author
+import com.stonehiy.jetpackdemo.entity.ResultEntity
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
@@ -31,8 +32,7 @@ interface ApiService {
     fun getUser(): Deferred<Response<User>>
     */
 
-    @GET("api/?version=v1")
-//    @GET("1")
-    fun getWeather(): Deferred<Response<WeatherEntity>>
+    @GET("/wxarticle/chapters/json ")
+    fun getWeather(): Deferred<Response<ResultEntity<List<Author>>>>
 
 }

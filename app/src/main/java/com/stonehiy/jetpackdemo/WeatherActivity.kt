@@ -5,7 +5,9 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import com.stonehiy.jetpackdemo.entity.WeatherEntity
+import com.stonehiy.jetpackdemo.entity.Author
+import com.stonehiy.jetpackdemo.entity.ResultEntity
+import kotlinx.android.synthetic.main.activity_weather.*
 
 class WeatherActivity : AppCompatActivity() {
     val TAG = WeatherActivity::class.java.name
@@ -19,8 +21,10 @@ class WeatherActivity : AppCompatActivity() {
         mModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(WeatherViewModel::class.java)
 
         //创建观察者来更新UI
-        val observer = Observer<WeatherEntity> { w ->
+        val observer = Observer<ResultEntity<List<Author>>> { w ->
             Log.i(TAG, "w = $w ")
+
+            tvDemo.text = w.toString()
 
         }
 
