@@ -2,6 +2,7 @@ package com.stonehiy.jetpackdemo
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import timber.log.Timber
 
 /**
  * @author ShiGang <ShiGang, stonehiy@163.com>
@@ -24,6 +25,8 @@ class DemoViewModel : ViewModel() {
     val value: MutableLiveData<String> by lazy {
         MutableLiveData<String>()
     }
+
+
 
 
 }

@@ -1,7 +1,7 @@
 package com.stonehiy.jetpackdemo
 
 import com.stonehiy.jetpackdemo.entity.Author
-import com.stonehiy.jetpackdemo.entity.ResultEntity
+import io.github.stonehiy.lib.entity.ResultEntity
 import kotlinx.coroutines.Deferred
 import retrofit2.Response
 import retrofit2.http.GET
