@@ -48,6 +48,8 @@ class WeatherActivity : CoreActivity() {
 ////        mModel.mMutableLiveDataError.observe(this, observerError)
 
         mModel.getData()
+        mModel.getData()
+        mModel.getData()
 
 
     }
