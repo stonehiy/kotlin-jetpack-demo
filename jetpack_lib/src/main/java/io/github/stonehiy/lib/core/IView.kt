@@ -1,5 +1,7 @@
 package io.github.stonehiy.lib.core
 
+import android.content.Context
+
 interface IView {
 
     /**
@@ -21,4 +23,5 @@ interface IView {
      * 跳转登录页面
      */
     fun reLoginActivity()
+
 }

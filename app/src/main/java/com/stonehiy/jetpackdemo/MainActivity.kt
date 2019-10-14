@@ -18,7 +18,6 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         mModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(DemoViewModel::class.java)
 
 

@@ -32,7 +32,6 @@ open class CoreViewModel : ViewModel() {
     fun <T> coroutineJob(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
             coroutineJobScope(block, liveData)
-//            delay(1500)
 
         }
     }
@@ -40,6 +39,7 @@ open class CoreViewModel : ViewModel() {
     private suspend fun <T> coroutineJobScope(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
         // Heavy work
         liveData.postValue(MyResult.Loading)
+        delay(2000)
         try {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {

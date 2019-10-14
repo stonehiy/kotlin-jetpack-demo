@@ -1,18 +1,32 @@
 package io.github.stonehiy.lib.core
 
-import android.widget.Toast
+import android.app.ProgressDialog
+import android.content.Context
+import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import io.github.stonehiy.lib.util.ToastUtil
+import java.security.AccessController.getContext
 
 open class CoreActivity : AppCompatActivity(), IView {
 
+    lateinit var progressDialog: ProgressDialog
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        progressDialog = ProgressDialog(this)
+    }
+
     override fun showLoading() {
-        ToastUtil.show(this, "showLoading", Toast.LENGTH_SHORT)
+        if (!progressDialog.isShowing) {
+            progressDialog.show()
+        }
+
 
     }
 
     override fun hideLoading() {
-//        ToastUtil.show(this, "hideLoading", Toast.LENGTH_SHORT)
+        if (progressDialog.isShowing) {
+            progressDialog.dismiss()
+        }
     }
 
     override fun showError(msg: String) {
