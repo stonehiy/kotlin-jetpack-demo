@@ -51,4 +51,6 @@ class WeatherActivity : CoreActivity() {
         ToastUtil.show(this, msg, Toast.LENGTH_SHORT)
     }
 
+
+
 }

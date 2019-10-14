@@ -31,15 +31,19 @@ open class CoreViewModel : ViewModel() {
      */
     fun <T> coroutineJob(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
+
             coroutineJobScope(block, liveData)
 
         }
     }
 
     private suspend fun <T> coroutineJobScope(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
+
+        Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
+
         // Heavy work
         liveData.postValue(MyResult.Loading)
-        delay(2000)
+        delay(1000)
         try {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {
@@ -63,10 +67,9 @@ open class CoreViewModel : ViewModel() {
     }
 
     override fun onCleared() {
-        // Cancel all coroutines
-        viewModelScope.cancel()
-        Timber.i("onCleared -> viewModelScope.cancel()")
         super.onCleared()
+        // Cancel all coroutines
+        Timber.i("onCleared -> viewModelScope.cancel()")
 
     }
 
