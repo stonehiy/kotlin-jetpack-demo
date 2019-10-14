@@ -9,7 +9,7 @@ import timber.log.Timber
 import java.lang.Exception
 
 
-open class CoreViewModel<T> : ViewModel() {
+open class CoreViewModel : ViewModel() {
 
 
 //    private val FACTORY = object : ViewModelProvider.Factory {
@@ -26,42 +26,39 @@ open class CoreViewModel<T> : ViewModel() {
 //    }
 
 
-    val mMutableLiveData: MutableLiveData<MyResult<ResultEntity<T>>> = MutableLiveData()
-
-    //val mMutableLiveDataError: MutableLiveData<String> = MutableLiveData()
-
     /**
      * 开启协程
      */
-    fun coroutineJob(block: () -> Deferred<Response<ResultEntity<T>>>) {
+    fun <T> coroutineJob(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
-            coroutineJobScope(block)
+            coroutineJobScope(block, liveData)
+//            delay(1500)
+
         }
     }
 
-    private suspend fun coroutineJobScope(block: () -> Deferred<Response<ResultEntity<T>>>) = withContext(Dispatchers.IO) {
+    private suspend fun <T> coroutineJobScope(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
         // Heavy work
+        liveData.postValue(MyResult.Loading)
         try {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {
                 val body = runJob.body()
                 if (body?.errorCode == 0) {
-                    mMutableLiveData.postValue(MyResult.Success(body))
+                    liveData.postValue(MyResult.Success(body))
                 } else {
-                    mMutableLiveData.postValue(MyResult.Error(Exception(body?.errorMsg)))
+                    liveData.postValue(MyResult.Error(Exception(body?.errorMsg)))
                 }
             } else {
                 val errorBody = runJob.errorBody()
-                mMutableLiveData.postValue(MyResult.Error(Exception(errorBody?.string())))
+                liveData.postValue(MyResult.Error(Exception(errorBody?.string())))
             }
         } catch (e: Exception) {
-            mMutableLiveData.postValue(MyResult.Error(e))
+            liveData.postValue(MyResult.Error(e))
         }
-
-
     }
 
-    private suspend fun runJob(block: () -> Deferred<Response<ResultEntity<T>>>): Response<ResultEntity<T>> {
+    private suspend fun <T> runJob(block: () -> Deferred<Response<ResultEntity<T>>>): Response<ResultEntity<T>> {
         return block().await()
     }
 
@@ -72,5 +69,6 @@ open class CoreViewModel<T> : ViewModel() {
         super.onCleared()
 
     }
+
 
 }

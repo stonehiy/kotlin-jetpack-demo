@@ -8,9 +8,17 @@
 
     <TextView
         android:id="@+id/tvDemo"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
         android:text="WeatherActivity"
+        tools:ignore="MissingConstraints" />
+
+    <TextView
+        android:id="@+id/tvDemo2"
+        android:layout_width="match_parent"
+        android:layout_height="100dp"
+        android:text="WeatherActivity"
+        app:layout_constraintTop_toBottomOf="@+id/tvDemo"
         tools:ignore="MissingConstraints" />
 
     <androidx.recyclerview.widget.RecyclerView
