@@ -48,7 +48,7 @@ class WeatherViewModel : CoreViewModel() {
         }, mBanners)
     }
 
-    open override fun onCleared() {
+    override fun onCleared() {
         super.onCleared()
         Timber.i("onCleared")
     }
