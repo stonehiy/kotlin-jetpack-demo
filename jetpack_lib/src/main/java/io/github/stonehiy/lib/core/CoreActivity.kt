@@ -4,6 +4,7 @@ import android.app.ProgressDialog
 import android.content.Context
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import timber.log.Timber
 import java.security.AccessController.getContext
 
 open class CoreActivity : AppCompatActivity(), IView {
@@ -33,6 +34,7 @@ open class CoreActivity : AppCompatActivity(), IView {
     }
 
     override fun reLoginActivity() {
+        Timber.d("reLoginActivity 401")
 
     }
 

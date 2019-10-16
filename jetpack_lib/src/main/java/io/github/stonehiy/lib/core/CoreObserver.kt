@@ -22,7 +22,13 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
                 onComplete()
 
             }
-            MyResult.Loading -> {
+
+            is MyResult.Authentication401 -> {
+                view.reLoginActivity()
+            }
+
+            MyResult.Loading
+            -> {
                 onLoading()
                 if (showLoading) {
                     view.showLoading()

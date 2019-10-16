@@ -48,10 +48,10 @@ open class CoreViewModel : ViewModel() {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {
                 val body = runJob.body()
-                if (body?.errorCode == 0) {
-                    liveData.postValue(MyResult.Success(body))
-                } else {
-                    liveData.postValue(MyResult.Error(Exception(body?.errorMsg)))
+                when (body?.errorCode) {
+                    0 -> liveData.postValue(MyResult.Success(body))
+                    401 -> liveData.postValue(MyResult.Authentication401)
+                    else -> liveData.postValue(MyResult.Error(Exception(body?.errorMsg)))
                 }
             } else {
                 val errorBody = runJob.errorBody()
