@@ -29,7 +29,7 @@ open class CoreViewModel : ViewModel() {
     /**
      * 开启协程
      */
-    fun <T> coroutineJob(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) {
+    fun <T> coroutineJob(block: suspend () -> Response<ResultEntity<T>>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
 
             coroutineJobScope(block, liveData)
@@ -37,7 +37,7 @@ open class CoreViewModel : ViewModel() {
         }
     }
 
-    private suspend fun <T> coroutineJobScope(block: () -> Deferred<Response<ResultEntity<T>>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
+    private suspend fun <T> coroutineJobScope(block: suspend () -> Response<ResultEntity<T>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
 
         Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
 
@@ -62,8 +62,8 @@ open class CoreViewModel : ViewModel() {
         }
     }
 
-    private suspend fun <T> runJob(block: () -> Deferred<Response<ResultEntity<T>>>): Response<ResultEntity<T>> {
-        return block().await()
+    private suspend fun <T> runJob(block: suspend () -> Response<ResultEntity<T>>): Response<ResultEntity<T>> {
+        return block()
     }
 
     override fun onCleared() {

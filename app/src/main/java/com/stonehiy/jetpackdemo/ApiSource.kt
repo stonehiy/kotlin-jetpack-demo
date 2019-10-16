@@ -36,7 +36,7 @@ class ApiSource {
         val instance = Retrofit.Builder()
                 .baseUrl("https://wanandroid.com")
                 .addConverterFactory(GsonConverterFactory.create())
-                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+//                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
                 .client(okHttpClient)
                 .build().create(ApiService::class.java)
 

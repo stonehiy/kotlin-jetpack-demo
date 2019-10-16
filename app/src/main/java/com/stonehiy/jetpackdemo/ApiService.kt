@@ -34,9 +34,16 @@ interface ApiService {
     */
 
     @GET("/wxarticle/chapters/json")
-    fun getChapters(): Deferred<Response<ResultEntity<List<Author>>>>
+    suspend fun getChapters(): Response<ResultEntity<List<Author>>>
 
     @GET("/banner/json")
-    fun getBanners(): Deferred<Response<ResultEntity<List<Banner>>>>
+    suspend fun getBanners(): Response<ResultEntity<List<Banner>>>
+
+
+//    @GET("/wxarticle/chapters/json")
+//    fun getChapters(): Deferred<Response<ResultEntity<List<Author>>>>
+//
+//    @GET("/banner/json")
+//    fun getBanners(): Deferred<Response<ResultEntity<List<Banner>>>>
 
 }
