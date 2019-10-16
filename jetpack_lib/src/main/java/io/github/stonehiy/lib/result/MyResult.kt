@@ -17,6 +17,8 @@
 
 package io.github.stonehiy.lib.result
 
+import io.github.stonehiy.lib.exception.ServerException
+
 
 /**
  * A generic class that holds a value with its loading status.
@@ -25,7 +27,7 @@ package io.github.stonehiy.lib.result
 sealed class MyResult<out R> {
 
     data class Success<out T>(val data: T) : MyResult<T>()
-    data class Error(val exception: Exception) : MyResult<Nothing>()
+    data class Error(val exception: ServerException) : MyResult<Nothing>()
     object Authentication401 : MyResult<Nothing>()
     object Loading : MyResult<Nothing>()
 

@@ -2,6 +2,7 @@ package io.github.stonehiy.lib.core
 
 import androidx.lifecycle.Observer
 import io.github.stonehiy.lib.entity.ResultEntity
+import io.github.stonehiy.lib.exception.ServerException
 import io.github.stonehiy.lib.result.MyResult
 
 
@@ -18,7 +19,7 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
 
             is MyResult.Error -> {
                 onError(t.exception)
-                view.showError(t.exception.message!!)
+                view.showError(t.exception.msg)
                 onComplete()
 
             }
@@ -41,7 +42,7 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
     }
 
     abstract fun onSuccess(r: ResultEntity<T>)
-    open fun onError(exception: Exception) {}
+    open fun onError(exception: ServerException) {}
     open fun onLoading() {}
     open fun onComplete() {
         view.hideLoading()

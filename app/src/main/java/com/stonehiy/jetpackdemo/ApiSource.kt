@@ -31,7 +31,7 @@ class ApiSource {
                         .readTimeout(15, TimeUnit.SECONDS)
                         .writeTimeout(15, TimeUnit.SECONDS)
                         .build()
-        @JvmField
+        @JvmStatic
         val instance = Retrofit.Builder()
                 .baseUrl("https://wanandroid.com")
                 .addConverterFactory(GsonConverterFactory.create())
