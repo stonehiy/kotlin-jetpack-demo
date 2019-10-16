@@ -2,6 +2,7 @@ package io.github.stonehiy.lib.core
 
 import androidx.lifecycle.*
 import io.github.stonehiy.lib.entity.ResultEntity
+import io.github.stonehiy.lib.exception.ApiException
 import io.github.stonehiy.lib.exception.ServerException
 import io.github.stonehiy.lib.result.MyResult
 import kotlinx.coroutines.*
@@ -52,7 +53,8 @@ open class CoreViewModel : ViewModel() {
                 when (body?.errorCode) {
                     0 -> liveData.postValue(MyResult.Success(body))
                     401 -> liveData.postValue(MyResult.Authentication401)
-                    else -> liveData.postValue(MyResult.Error(ServerException.handleException(Exception(body?.errorMsg))))
+                    else -> liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg
+                            ?: ""))))
                 }
             } else {
                 val errorBody = runJob.errorBody()

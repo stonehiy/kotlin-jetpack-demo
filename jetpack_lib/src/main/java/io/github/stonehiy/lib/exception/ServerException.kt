@@ -80,6 +80,10 @@ class ServerException(throwable: Throwable) : Exception() {
                 ex = ServerException(e, ERROR.ILLEGAL_STATE_ERROR)
                 ex.msg = e.message ?: ""
                 return ex
+            } else if (e is ApiException) {
+                ex = ServerException(e, ERROR.UNKNOWN)
+                ex.msg = e.message ?: ""
+                return ex
             } else {
                 ex = ServerException(e, ERROR.UNKNOWN)
                 ex.msg = "未知错误"
