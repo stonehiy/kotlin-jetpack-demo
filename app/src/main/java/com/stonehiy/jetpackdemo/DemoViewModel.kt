@@ -26,7 +26,10 @@ class DemoViewModel : ViewModel() {
         MutableLiveData<String>()
     }
 
-
+    override fun onCleared() {
+        super.onCleared()
+        Timber.i("onCleared")
+    }
 
 
 }
