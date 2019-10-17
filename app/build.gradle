@@ -44,6 +44,8 @@ dependencies {
     implementation "androidx.core:core-ktx:$rootProject.core_ktx"
     implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:$rootProject.lifecycle_viewmodel_ktx"
     implementation "androidx.constraintlayout:constraintlayout:$rootProject.constraintlayout"
+    implementation "androidx.activity:activity-ktx:$rootProject.activity_version"
+    implementation "androidx.fragment:fragment-ktx:$rootProject.fragment_version"
 
 
     //kotlin协程、retrofit2
