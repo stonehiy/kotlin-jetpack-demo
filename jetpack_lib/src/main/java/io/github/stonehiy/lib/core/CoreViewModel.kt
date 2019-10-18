@@ -1,7 +1,6 @@
 package io.github.stonehiy.lib.core
 
 import androidx.lifecycle.*
-import io.github.stonehiy.lib.entity.ResultEntity
 import io.github.stonehiy.lib.exception.ApiException
 import io.github.stonehiy.lib.exception.ServerException
 import io.github.stonehiy.lib.result.MyResult
@@ -31,7 +30,7 @@ open class CoreViewModel : ViewModel() {
     /**
      * 开启协程
      */
-    fun <T> coroutineJob(block: suspend () -> Response<ResultEntity<T>>, liveData: CoreLiveData<T>) {
+    fun <T> coroutineJob(block: suspend () -> Response<out IResult<T>>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
 
             coroutineJobScope(block, liveData)
@@ -39,7 +38,7 @@ open class CoreViewModel : ViewModel() {
         }
     }
 
-    private suspend fun <T> coroutineJobScope(block: suspend () -> Response<ResultEntity<T>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
+    private suspend fun <T> coroutineJobScope(block: suspend () -> Response<out IResult<T>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
 
         Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
 
@@ -50,22 +49,30 @@ open class CoreViewModel : ViewModel() {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {
                 val body = runJob.body()
-                when (body?.errorCode) {
-                    0 -> liveData.postValue(MyResult.Success(body))
-                    401 -> liveData.postValue(MyResult.Authentication401)
-                    else -> liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg
-                            ?: ""))))
+                if (body?.success() == true) {
+                    liveData.postValue(MyResult.Success(body))
+                } else {
+                    if (body?.authentication401() == true) {
+                        liveData.postValue(MyResult.Authentication401)
+                    } else {
+                        liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg()
+                                ?: ""))))
+                    }
                 }
             } else {
-                val errorBody = runJob.errorBody()
-                liveData.postValue(MyResult.Error(ServerException.handleException(Exception(errorBody?.string()))))
+                if (runJob.code() == 401) {
+                    liveData.postValue(MyResult.Authentication401)
+                } else {
+                    val errorBody = runJob.errorBody()
+                    liveData.postValue(MyResult.Error(ServerException.handleException(Exception(errorBody?.string()))))
+                }
             }
         } catch (e: Exception) {
             liveData.postValue(MyResult.Error(ServerException.handleException(e)))
         }
     }
 
-    private suspend fun <T> runJob(block: suspend () -> Response<ResultEntity<T>>): Response<ResultEntity<T>> {
+    private suspend fun <T> runJob(block: suspend () -> Response<out IResult<T>>): Response<out IResult<T>> {
         return block()
     }
 

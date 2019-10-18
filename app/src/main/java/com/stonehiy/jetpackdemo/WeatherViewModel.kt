@@ -1,13 +1,9 @@
 package com.stonehiy.jetpackdemo
 
-import androidx.lifecycle.MutableLiveData
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.CoreViewModel
-import io.github.stonehiy.lib.entity.ResultEntity
-import io.github.stonehiy.lib.result.MyResult
-import timber.log.Timber
 
 /**
  * @author ShiGang <ShiGang, stonehiy@163.com>
