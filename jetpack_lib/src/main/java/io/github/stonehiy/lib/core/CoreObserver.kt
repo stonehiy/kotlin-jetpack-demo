@@ -25,6 +25,7 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
 
             is MyResult.Authentication401 -> {
                 view.reLoginActivity()
+                onComplete()
             }
 
             MyResult.Loading
