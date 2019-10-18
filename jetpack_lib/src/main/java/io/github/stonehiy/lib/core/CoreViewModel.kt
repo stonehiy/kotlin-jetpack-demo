@@ -45,7 +45,7 @@ open class CoreViewModel : ViewModel() {
 
         // Heavy work
         liveData.postValue(MyResult.Loading)
-        delay(1000)
+        delay(5000)
         try {
             val runJob = runJob(block)
             if (runJob.isSuccessful) {
@@ -67,13 +67,6 @@ open class CoreViewModel : ViewModel() {
 
     private suspend fun <T> runJob(block: suspend () -> Response<ResultEntity<T>>): Response<ResultEntity<T>> {
         return block()
-    }
-
-    override fun onCleared() {
-        super.onCleared()
-        // Cancel all coroutines
-        Timber.i("onCleared -> viewModelScope.cancel()")
-
     }
 
 

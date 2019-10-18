@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import io.github.stonehiy.lib.util.viewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
@@ -18,7 +19,8 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        mModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(DemoViewModel::class.java)
+
+        mModel = viewModelProvider(ViewModelProvider.AndroidViewModelFactory.getInstance(application))
 
 
         //创建观察者来更新UI

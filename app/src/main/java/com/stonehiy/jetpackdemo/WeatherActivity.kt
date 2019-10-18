@@ -10,6 +10,7 @@ import io.github.stonehiy.lib.core.CoreObserver
 import io.github.stonehiy.lib.core.CoreActivity
 import io.github.stonehiy.lib.entity.ResultEntity
 import io.github.stonehiy.lib.util.ToastUtil
+import io.github.stonehiy.lib.util.viewModelProvider
 import kotlinx.android.synthetic.main.activity_weather.*
 
 class WeatherActivity : CoreActivity() {
@@ -23,7 +24,7 @@ class WeatherActivity : CoreActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_weather)
 
-        mModel = ViewModelProvider.AndroidViewModelFactory.getInstance(application).create(WeatherViewModel::class.java)
+        mModel = viewModelProvider(ViewModelProvider.AndroidViewModelFactory.getInstance(application))
 
 
 
@@ -50,7 +51,6 @@ class WeatherActivity : CoreActivity() {
     override fun showError(msg: String) {
         ToastUtil.show(this, msg, Toast.LENGTH_SHORT)
     }
-
 
 
 }
