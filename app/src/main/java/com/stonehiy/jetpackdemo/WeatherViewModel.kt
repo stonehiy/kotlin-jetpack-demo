@@ -31,6 +31,7 @@ class WeatherViewModel : CoreViewModel() {
 
     val mBanners: CoreLiveData<List<Banner>> = CoreLiveData()
 
+
     fun getChapters() {
         coroutineJob({
             ApiSource.instance.getChapters()
