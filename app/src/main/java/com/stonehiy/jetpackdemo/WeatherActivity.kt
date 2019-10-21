@@ -2,7 +2,10 @@ package com.stonehiy.jetpackdemo
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.stonehiy.jetpackdemo.databinding.ActivityWeatherBinding
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreObserver
@@ -21,22 +24,26 @@ class WeatherActivity : CoreActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_weather)
+//        setContentView(R.layout.activity_weather)
 
         mModel = viewModelProvider(ViewModelProvider.AndroidViewModelFactory.getInstance(application))
+
+        var binding: ActivityWeatherBinding = DataBindingUtil.setContentView(this, R.layout.activity_weather)
 
 
 
 
         mModel.mBanners.observe(this, object : CoreObserver<List<Banner>>(this) {
             override fun onSuccess(r: IResult<List<Banner>>) {
-                tvDemo.text = r.toString()
+//                tvDemo.text = r.toString()
+                binding.banner = r.data()[0]
             }
         })
 
         mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(this) {
             override fun onSuccess(r: IResult<List<Author>>) {
-                tvDemo2.text = r.toString()
+//                tvDemo2.text = r.toString()
+                binding.author = r.data()[0]
 
             }
         })

@@ -1,29 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+
+
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context=".WeatherActivity">
+    xmlns:tools="http://schemas.android.com/tools">
 
-    <TextView
-        android:id="@+id/tvDemo"
+    <data>
+
+        <variable
+            name="author"
+            type="com.stonehiy.jetpackdemo.entity.Author" />
+
+        <variable
+            name="banner"
+            type="com.stonehiy.jetpackdemo.entity.Banner" />
+    </data>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="WeatherActivity"
-        tools:ignore="MissingConstraints" />
+        android:layout_height="match_parent"
+        tools:context=".WeatherActivity">
 
-    <TextView
-        android:id="@+id/tvDemo2"
-        android:layout_width="match_parent"
-        android:layout_height="100dp"
-        android:text="WeatherActivity"
-        app:layout_constraintTop_toBottomOf="@+id/tvDemo"
-        tools:ignore="MissingConstraints" />
+        <TextView
+            android:id="@+id/tvDemo"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="@{author.name}"
+            tools:ignore="MissingConstraints" />
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerView"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        <TextView
+            android:id="@+id/tvDemo2"
+            android:layout_width="match_parent"
+            android:layout_height="100dp"
+            android:text="@{banner.desc}"
+            app:layout_constraintTop_toBottomOf="@+id/tvDemo"
+            tools:ignore="MissingConstraints" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+</layout>
