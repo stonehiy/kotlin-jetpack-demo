@@ -13,27 +13,13 @@ import java.lang.Exception
 open class CoreViewModel : ViewModel() {
 
 
-//    private val FACTORY = object : ViewModelProvider.Factory {
-//        override fun <T : ViewModel> create(modelClass: Class<T>): T {
-//            val viewModel = FragmentManagerViewModel(true)
-//            return viewModel as T
-//        }
-//    }
-//
-//    fun getInstance(viewModelStore: ViewModelStore): FragmentManagerViewModel {
-//        val viewModelProvider = ViewModelProvider(viewModelStore,
-//                FACTORY)
-//        return viewModelProvider.get(FragmentManagerViewModel::class.java)
-//    }
-
-
     private suspend fun <T> coroutineJobScope(block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
 
         Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
 
         // Heavy work
         liveData.postValue(MyResult.Loading)
-        delay(5000)
+//        delay(5000)
         try {
             val body = runJob(block)
             if (body.success()) {
@@ -65,8 +51,6 @@ open class CoreViewModel : ViewModel() {
 
         }
     }
-
-
 
 
 }

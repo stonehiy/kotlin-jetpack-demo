@@ -26,7 +26,7 @@ class MainActivity : AppCompatActivity() {
         //创建观察者来更新UI
         val observer = Observer<String> { value ->
             Log.d(TAG, "value = $value")
-            tvValue.setText(value)
+            tvValue.text = value
 
         }
 
