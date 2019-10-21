@@ -27,18 +27,7 @@ open class CoreViewModel : ViewModel() {
 //    }
 
 
-    /**
-     * 开启协程
-     */
-    fun <T> coroutineJob(block: suspend () -> Response<out IResult<T>>, liveData: CoreLiveData<T>) {
-        viewModelScope.launch {
-
-            coroutineJobScope(block, liveData)
-
-        }
-    }
-
-    private suspend fun <T> coroutineJobScope(block: suspend () -> Response<out IResult<T>>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
+    private suspend fun <T> coroutineJobScope(block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) = withContext(Dispatchers.IO) {
 
         Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
 
@@ -46,25 +35,15 @@ open class CoreViewModel : ViewModel() {
         liveData.postValue(MyResult.Loading)
         delay(5000)
         try {
-            val runJob = runJob(block)
-            if (runJob.isSuccessful) {
-                val body = runJob.body()
-                if (body?.success() == true) {
-                    liveData.postValue(MyResult.Success(body))
-                } else {
-                    if (body?.authentication401() == true) {
-                        liveData.postValue(MyResult.Authentication401)
-                    } else {
-                        liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg()
-                                ?: ""))))
-                    }
-                }
+            val body = runJob(block)
+            if (body.success()) {
+                liveData.postValue(MyResult.Success(body))
             } else {
-                if (runJob.code() == 401) {
+                if (body.authentication401()) {
                     liveData.postValue(MyResult.Authentication401)
                 } else {
-                    val errorBody = runJob.errorBody()
-                    liveData.postValue(MyResult.Error(ServerException.handleException(Exception(errorBody?.string()))))
+                    liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg()
+                            ?: ""))))
                 }
             }
         } catch (e: Exception) {
@@ -72,8 +51,70 @@ open class CoreViewModel : ViewModel() {
         }
     }
 
-    private suspend fun <T> runJob(block: suspend () -> Response<out IResult<T>>): Response<out IResult<T>> {
+    private suspend fun <T> runJob(block: suspend () -> IResult<T>): IResult<T> {
         return block()
+    }
+
+
+    /**
+     * 开启协程（单任务）
+     */
+    fun <T> coroutineJob(block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) {
+        viewModelScope.launch {
+
+            coroutineJobScope(block, liveData)
+
+        }
+    }
+
+    /**
+     * 开启协程（多任务）
+     */
+    fun <T> coroutineMultiJob(vararg block: suspend () -> Response<out IResult<T>>, liveData: CoreLiveData<T>) {
+        viewModelScope.launch {
+            withContext(Dispatchers.IO) {
+                liveData.postValue(MyResult.Loading)
+                try {
+                    val result = mutableListOf<T>()
+                    block.forEach {
+
+                        val async = async {
+                            val resJob = it()
+//                            result.addAll(resJob)
+                        }
+                        /*
+                        if (resJob.isSuccessful) {
+                            val body = resJob.body()
+                            if (body?.success() == true) {
+
+                                liveData.postValue(MyResult.Success(body))
+                            } else {
+                                if (body?.authentication401() == true) {
+                                    liveData.postValue(MyResult.Authentication401)
+                                } else {
+                                    liveData.postValue(MyResult.Error(ServerException.handleException(ApiException(body?.errorMsg()
+                                            ?: ""))))
+                                }
+                            }
+                        } else {
+                            if (resJob.code() == 401) {
+                                liveData.postValue(MyResult.Authentication401)
+                            } else {
+                                val errorBody = resJob.errorBody()
+                                liveData.postValue(MyResult.Error(ServerException.handleException(Exception(errorBody?.string()))))
+                            }
+                        }
+                        */
+
+                    }
+
+
+                } catch (e: Exception) {
+                    liveData.postValue(MyResult.Error(ServerException.handleException(e)))
+                }
+            }
+
+        }
     }
 
 

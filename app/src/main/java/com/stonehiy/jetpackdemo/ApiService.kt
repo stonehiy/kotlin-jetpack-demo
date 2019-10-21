@@ -33,10 +33,10 @@ interface ApiService {
     */
 
     @GET("/wxarticle/chapters/json")
-    suspend fun getChapters(): Response<ResultEntity<List<Author>>>
+    suspend fun getChapters(): ResultEntity<List<Author>>
 
     @GET("/banner/json")
-    suspend fun getBanners(): Response<ResultEntity<List<Banner>>>
+    suspend fun getBanners(): ResultEntity<List<Banner>>
 
 
 //    @GET("/wxarticle/chapters/json")

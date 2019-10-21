@@ -45,5 +45,4 @@ class WeatherViewModel : CoreViewModel() {
     }
 
 
-
 }
