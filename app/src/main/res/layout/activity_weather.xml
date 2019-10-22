@@ -26,14 +26,14 @@
             android:id="@+id/tvDemo"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="@{author.name}"
+            android:text="@{author.toString()}"
             tools:ignore="MissingConstraints" />
 
         <TextView
             android:id="@+id/tvDemo2"
             android:layout_width="match_parent"
             android:layout_height="100dp"
-            android:text="@{banner.desc}"
+            android:text="@{banner.toString()}"
             app:layout_constraintTop_toBottomOf="@+id/tvDemo"
             tools:ignore="MissingConstraints" />
 
