@@ -24,12 +24,12 @@ import io.github.stonehiy.lib.exception.ServerException
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
-sealed class MyResult<out R> {
+sealed class SResult<out R> {
 
-    data class Success<out T>(val data: T) : MyResult<T>()
-    data class Error(val exception: ServerException) : MyResult<Nothing>()
-    object Authentication401 : MyResult<Nothing>()
-    object Loading : MyResult<Nothing>()
+    data class Success<out T>(val data: T) : SResult<T>()
+    data class Error(val exception: ServerException) : SResult<Nothing>()
+    object Authentication401 : SResult<Nothing>()
+    object Loading : SResult<Nothing>()
 
     override fun toString(): String {
         return when (this) {
@@ -44,10 +44,10 @@ sealed class MyResult<out R> {
 /**
  * `true` if [Result] is of type [Success] & holds non-null [Success.data].
  */
-val MyResult<*>.succeeded
-    get() = this is MyResult.Success && data != null
+val SResult<*>.succeeded
+    get() = this is SResult.Success && data != null
 
-fun <T> MyResult<T>.successOr(fallback: T): T {
-    return (this as? MyResult.Success<T>)?.data ?: fallback
+fun <T> SResult<T>.successOr(fallback: T): T {
+    return (this as? SResult.Success<T>)?.data ?: fallback
 }
 

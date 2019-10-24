@@ -2,31 +2,31 @@ package io.github.stonehiy.lib.core
 
 import androidx.lifecycle.Observer
 import io.github.stonehiy.lib.exception.ServerException
-import io.github.stonehiy.lib.result.MyResult
+import io.github.stonehiy.lib.result.SResult
 
 
-abstract class CoreObserver<T> constructor(val view: IView) : Observer<MyResult<out IResult<T>>> {
+abstract class CoreObserver<T> constructor(val view: IView) : Observer<SResult<out IResult<T>>> {
 
 
-    override fun onChanged(t: MyResult<out IResult<T>>?) {
+    override fun onChanged(t: SResult<out IResult<T>>?) {
         when (t) {
-            is MyResult.Success -> {
+            is SResult.Success -> {
                 onSuccess(t.data)
                 onComplete()
 
             }
 
-            is MyResult.Error -> {
+            is SResult.Error -> {
                 onError(t.exception)
                 onComplete()
             }
 
-            is MyResult.Authentication401 -> {
+            is SResult.Authentication401 -> {
                 onAuthentication401()
                 onComplete()
             }
 
-            MyResult.Loading
+            SResult.Loading
             -> {
                 onLoading()
 

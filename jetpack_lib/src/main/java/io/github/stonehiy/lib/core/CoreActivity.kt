@@ -9,6 +9,9 @@ import io.github.stonehiy.lib.util.ToastUtil
 import timber.log.Timber
 import java.security.AccessController.getContext
 
+/**
+ * use [IView] child object
+ */
 @Deprecated(message = "Deprecated")
 open class CoreActivity : AppCompatActivity(), IView {
 
