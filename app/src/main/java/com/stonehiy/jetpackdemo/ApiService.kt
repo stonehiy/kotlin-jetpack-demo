@@ -3,8 +3,12 @@ package com.stonehiy.jetpackdemo
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import com.stonehiy.jetpackdemo.entity.ResultEntity
+import com.stonehiy.jetpackdemo.entity.User
 import retrofit2.Response
+import retrofit2.http.FieldMap
+import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET
+import retrofit2.http.POST
 
 /**
  * @author ShiGang <ShiGang, stonehiy@163.com>
@@ -22,15 +26,6 @@ import retrofit2.http.GET
  */
 interface ApiService {
 
-    /*
-    @GET("/user")
-    fun getUser(): Deferred<User>
-
-    // or
-
-    @GET("/user")
-    fun getUser(): Deferred<Response<User>>
-    */
 
     @GET("/wxarticle/chapters/json")
     suspend fun getChapters(): ResultEntity<List<Author>>
@@ -39,10 +34,9 @@ interface ApiService {
     suspend fun getBanners(): ResultEntity<List<Banner>>
 
 
-//    @GET("/wxarticle/chapters/json")
-//    fun getChapters(): Deferred<Response<ResultEntity<List<Author>>>>
-//
-//    @GET("/banner/json")
-//    fun getBanners(): Deferred<Response<ResultEntity<List<Banner>>>>
+    @FormUrlEncoded
+    @POST("/user/login")
+    suspend fun login(@FieldMap map: Map<String, String>): ResultEntity<User>
+
 
 }

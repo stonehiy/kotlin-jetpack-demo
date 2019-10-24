@@ -32,6 +32,7 @@ open class CoreViewModel : ViewModel() {
                 }
             }
         } catch (e: Exception) {
+            Timber.w(e)
             liveData.postValue(MyResult.Error(ServerException.handleException(e)))
         }
     }
