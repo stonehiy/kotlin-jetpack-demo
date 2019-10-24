@@ -1,13 +1,13 @@
 package com.stonehiy.jetpackdemo.ui.login
 
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.ViewModel
 import com.stonehiy.jetpackdemo.ApiSource
-import com.stonehiy.jetpackdemo.entity.Banner
 import com.stonehiy.jetpackdemo.entity.User
 import io.github.stonehiy.lib.core.CoreLiveData
-import io.github.stonehiy.lib.core.CoreViewModel
+import io.github.stonehiy.lib.core.coroutineJob
 
-class LoginViewModel : CoreViewModel() {
+class LoginViewModel : ViewModel() {
 
 
     // Two-way databinding, exposing MutableLiveData

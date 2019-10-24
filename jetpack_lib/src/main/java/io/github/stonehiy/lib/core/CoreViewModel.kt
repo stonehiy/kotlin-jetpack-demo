@@ -9,7 +9,10 @@ import retrofit2.Response
 import timber.log.Timber
 import java.lang.Exception
 
-
+/**
+ * use [ViewModel#coroutineJob]
+ */
+@Deprecated("Deprecated")
 open class CoreViewModel : ViewModel() {
 
 
@@ -45,6 +48,7 @@ open class CoreViewModel : ViewModel() {
     /**
      * 开启协程（单任务）
      */
+    @Deprecated("Deprecated")
     fun <T> coroutineJob(block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) {
         viewModelScope.launch {
 

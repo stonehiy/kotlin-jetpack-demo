@@ -1,9 +1,11 @@
 package com.stonehiy.jetpackdemo
 
+import androidx.lifecycle.ViewModel
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.CoreViewModel
+import io.github.stonehiy.lib.core.coroutineJob
 
 /**
  * @author ShiGang <ShiGang, stonehiy@163.com>
@@ -19,7 +21,7 @@ import io.github.stonehiy.lib.core.CoreViewModel
  * --------------------------------------------------
  * </pre>
  */
-class WeatherViewModel : CoreViewModel() {
+class WeatherViewModel : ViewModel() {
 
 //    private val mWeather: MutableLiveData<WeatherEntity> = MutableLiveData()
 //    private val viewModelJob = SupervisorJob()
