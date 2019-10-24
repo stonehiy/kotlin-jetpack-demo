@@ -29,9 +29,9 @@ class WeatherViewModel : ViewModel() {
 //    private val uiScope = CoroutineScope(Dispatchers.Main + viewModelJob)
 
 
-    val mChapters: CoreLiveData<List<Author>> = CoreLiveData()
+    val mChapters = CoreLiveData<List<Author>>()
 
-    val mBanners: CoreLiveData<List<Banner>> = CoreLiveData()
+    val mBanners = CoreLiveData<List<Banner>>()
 
 
     fun getChapters() {
