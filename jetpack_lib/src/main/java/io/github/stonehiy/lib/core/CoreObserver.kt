@@ -5,7 +5,7 @@ import io.github.stonehiy.lib.exception.ServerException
 import io.github.stonehiy.lib.result.MyResult
 
 
-abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boolean = true) : Observer<MyResult<out IResult<T>>> {
+abstract class CoreObserver<T> constructor(val view: IView) : Observer<MyResult<out IResult<T>>> {
 
 
     override fun onChanged(t: MyResult<out IResult<T>>?) {
@@ -18,22 +18,18 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
 
             is MyResult.Error -> {
                 onError(t.exception)
-                view.showError(t.exception.msg)
                 onComplete()
-
             }
 
             is MyResult.Authentication401 -> {
-                view.reLoginActivity()
+                onAuthentication401()
                 onComplete()
             }
 
             MyResult.Loading
             -> {
                 onLoading()
-                if (showLoading) {
-                    view.showLoading()
-                }
+
             }
 
 
@@ -42,10 +38,21 @@ abstract class CoreObserver<T> constructor(val view: IView, val showLoading: Boo
     }
 
     abstract fun onSuccess(r: IResult<T>)
-    open fun onError(exception: ServerException) {}
-    open fun onLoading() {}
+
+    open fun onError(exception: ServerException) {
+        view.showError(exception.msg)
+    }
+
+    open fun onLoading() {
+        view.showLoading()
+    }
+
     open fun onComplete() {
         view.hideLoading()
+    }
+
+    open fun onAuthentication401() {
+        view.reLoginActivity()
     }
 
 

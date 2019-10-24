@@ -2,9 +2,11 @@ package com.stonehiy.jetpackdemo
 
 import android.os.Bundle
 import android.widget.Toast
+import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.lifecycle.ViewModelProvider
+import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityWeatherBinding
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
@@ -15,7 +17,7 @@ import io.github.stonehiy.lib.util.ToastUtil
 import io.github.stonehiy.lib.util.viewModelProvider
 import kotlinx.android.synthetic.main.activity_weather.*
 
-class WeatherActivity : CoreActivity() {
+class WeatherActivity : AppCompatActivity() {
 
 
     val TAG = WeatherActivity::class.java.name
@@ -33,14 +35,14 @@ class WeatherActivity : CoreActivity() {
 
 
 
-        mModel.mBanners.observe(this, object : CoreObserver<List<Banner>>(this) {
+        mModel.mBanners.observe(this, object : CoreObserver<List<Banner>>(NetView(this)) {
             override fun onSuccess(r: IResult<List<Banner>>) {
 //                tvDemo.text = r.toString()
                 binding.banner = r.data()[0]
             }
         })
 
-        mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(this) {
+        mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(NetView(this)) {
             override fun onSuccess(r: IResult<List<Author>>) {
 //                tvDemo2.text = r.toString()
                 binding.author = r.data()[0]
@@ -52,10 +54,6 @@ class WeatherActivity : CoreActivity() {
         mModel.getChapters()
 
 
-    }
-
-    override fun showError(msg: String) {
-        ToastUtil.show(this, msg, Toast.LENGTH_SHORT)
     }
 
 

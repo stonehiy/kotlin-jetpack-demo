@@ -14,6 +14,11 @@ class LoginViewModel : CoreViewModel() {
     val username = MutableLiveData<String>()
     val password = MutableLiveData<String>()
 
+    init {
+        username.value = "shigang"
+        password.value = "123456"
+    }
+
 
     val mLogin: CoreLiveData<User> = CoreLiveData()
     /**
