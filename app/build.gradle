@@ -1,8 +1,7 @@
 apply plugin: 'com.android.application'
-
 apply plugin: 'kotlin-android'
-
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'app-joint'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -62,6 +61,8 @@ dependencies {
     implementation "com.squareup.retrofit2:converter-gson:$rootProject.converter_gson"
     implementation "com.squareup.okhttp3:logging-interceptor:$rootProject.logging_interceptor"
     implementation project(path: ':jetpack_lib')
+
+    implementation "io.github.prototypez:app-joint-core:${rootProject.app_joint_core}"
 }
 
 

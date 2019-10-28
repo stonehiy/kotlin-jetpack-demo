@@ -55,6 +55,8 @@ dependencies {
 
 
     api "com.jakewharton.timber:timber:$rootProject.timber"
+
+    implementation "io.github.prototypez:app-joint-core:${rootProject.app_joint_core}"
 }
 
 

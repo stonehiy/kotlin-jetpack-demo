@@ -1,12 +1,13 @@
-package io.github.stonehiy.lib
+package com.stonehiy.jetpackdemo
 
 import android.app.Application
-import io.github.prototypez.appjoint.core.ModuleSpec
+import io.github.prototypez.appjoint.core.AppSpec
+import io.github.stonehiy.lib.BuildConfig
+import io.github.stonehiy.lib.CrashReportingTree
 import timber.log.Timber
 
-@ModuleSpec
-class MainApp : Application() {
-
+@AppSpec
+class App : Application() {
     override fun onCreate() {
         super.onCreate()
         if (BuildConfig.DEBUG) {
@@ -14,8 +15,6 @@ class MainApp : Application() {
         } else {
             Timber.plant(CrashReportingTree())
         }
-
-        Timber.i("MainApp onCreate")
+        Timber.i("App onCreate")
     }
-
 }
