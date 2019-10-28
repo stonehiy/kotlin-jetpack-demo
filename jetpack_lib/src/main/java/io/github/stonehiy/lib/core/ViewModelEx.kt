@@ -45,7 +45,7 @@ inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, 
 }
 
 /**
- * 开启协程（多任务）
+ * 开启协程（多任务）,还没有想好怎么做
  */
 @Deprecated("Deprecated")
 inline fun <T> ViewModel.coroutineMJob(vararg block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) {
