@@ -26,6 +26,7 @@ buildscript {
         okhttp = '3.14.0'
         converter_gson = '2.5.0'
         logging_interceptor = '3.14.0'
+        glide = '4.9.0'
 
         //
         navigation = '1.0.0'

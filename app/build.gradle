@@ -2,6 +2,7 @@ apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
 apply plugin: 'app-joint'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -63,6 +64,10 @@ dependencies {
     implementation project(path: ':jetpack_lib')
 
     implementation "io.github.prototypez:app-joint-core:${rootProject.app_joint_core}"
+
+
+    implementation "com.github.bumptech.glide:glide:${rootProject.glide}"
+    kapt "com.github.bumptech.glide:compiler:${rootProject.glide}"
 }
 
 

@@ -1,6 +1,7 @@
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 apply plugin: 'kotlin-android-extensions'
+apply plugin: 'kotlin-kapt'
 
 android {
     compileSdkVersion rootProject.compileSdkVersion
@@ -57,6 +58,11 @@ dependencies {
     api "com.jakewharton.timber:timber:$rootProject.timber"
 
     implementation "io.github.prototypez:app-joint-core:${rootProject.app_joint_core}"
+
+
+    implementation "com.github.bumptech.glide:glide:${rootProject.glide}"
+    implementation "com.github.bumptech.glide:okhttp3-integration:${rootProject.glide}"
+    kapt "com.github.bumptech.glide:compiler:${rootProject.glide}"
 }
 
 
