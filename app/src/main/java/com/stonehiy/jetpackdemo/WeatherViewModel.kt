@@ -1,11 +1,16 @@
 package com.stonehiy.jetpackdemo
 
 import androidx.lifecycle.ViewModel
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.CoreViewModel
 import io.github.stonehiy.lib.core.coroutineJob
+import timber.log.Timber
 
 /**
  * @author ShiGang <ShiGang, stonehiy@163.com>
@@ -46,6 +51,9 @@ class WeatherViewModel : ViewModel() {
             ApiSource.instance.getBanners()
         }, mBanners)
     }
+
+
+
 
 
 }

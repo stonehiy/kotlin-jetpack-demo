@@ -1,28 +1,24 @@
 package com.stonehiy.jetpackdemo
 
 import android.os.Bundle
-import android.widget.Toast
+import android.text.style.TtsSpan
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
-import androidx.databinding.ViewDataBinding
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.paging.DataSource
+import androidx.paging.LivePagedListBuilder
+import androidx.paging.PageKeyedDataSource
+import androidx.paging.PagedList
+import com.stonehiy.jetpackdemo.adapter.CustomAdapter
 import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityWeatherBinding
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreObserver
-import io.github.stonehiy.lib.core.CoreActivity
 import io.github.stonehiy.lib.core.IResult
-import io.github.stonehiy.lib.util.ToastUtil
 import io.github.stonehiy.lib.util.viewModelProvider
-import kotlinx.android.synthetic.main.activity_weather.*
 import timber.log.Timber
-import java.util.*
-import java.util.concurrent.Executors
-import java.util.concurrent.TimeUnit
-import kotlin.concurrent.fixedRateTimer
-import kotlin.concurrent.timer
-import kotlin.concurrent.timerTask
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -30,7 +26,10 @@ class WeatherActivity : AppCompatActivity() {
     val TAG = WeatherActivity::class.java.name
 
     private lateinit var mModel: WeatherViewModel
-    var intMax = Int.MAX_VALUE;
+    var intMax = Int.MAX_VALUE
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,18 +59,25 @@ class WeatherActivity : AppCompatActivity() {
 
         mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(NetView(this)) {
             override fun onSuccess(r: IResult<List<Author>>) {
-//                tvDemo2.text = r.toString()
                 binding.author = r.data()[0]
-
 
             }
         })
 
+
+
         mModel.getBanners()
         mModel.getChapters()
+
+
 
 
     }
 
 
 }
+
+
+
+
+

@@ -1,7 +1,9 @@
 package com.stonehiy.jetpackdemo
 
+import android.view.View
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
+import kotlinx.android.synthetic.main.activity_main.view.*
 import timber.log.Timber
 
 /**
@@ -18,7 +20,7 @@ import timber.log.Timber
  * --------------------------------------------------
  * </pre>
  */
-class DemoViewModel : ViewModel() {
+class MainViewModel : ViewModel() {
 
     //https://www.tianqiapi.com/api/?version=v1
 
@@ -30,6 +32,7 @@ class DemoViewModel : ViewModel() {
         super.onCleared()
         Timber.i("onCleared")
     }
+
 
 
 }

@@ -1,5 +1,6 @@
 package com.stonehiy.jetpackdemo
 
+import androidx.paging.PagedList
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import com.stonehiy.jetpackdemo.entity.ResultEntity
