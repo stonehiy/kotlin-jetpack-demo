@@ -16,6 +16,13 @@ import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.util.ToastUtil
 import io.github.stonehiy.lib.util.viewModelProvider
 import kotlinx.android.synthetic.main.activity_weather.*
+import timber.log.Timber
+import java.util.*
+import java.util.concurrent.Executors
+import java.util.concurrent.TimeUnit
+import kotlin.concurrent.fixedRateTimer
+import kotlin.concurrent.timer
+import kotlin.concurrent.timerTask
 
 class WeatherActivity : AppCompatActivity() {
 
@@ -23,6 +30,7 @@ class WeatherActivity : AppCompatActivity() {
     val TAG = WeatherActivity::class.java.name
 
     private lateinit var mModel: WeatherViewModel
+    var intMax = Int.MAX_VALUE;
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -38,7 +46,15 @@ class WeatherActivity : AppCompatActivity() {
         mModel.mBanners.observe(this, object : CoreObserver<List<Banner>>(NetView(this)) {
             override fun onSuccess(r: IResult<List<Banner>>) {
 //                tvDemo.text = r.toString()
+                val data = r.data()
                 binding.banner = r.data()[0]
+//                timer("timer", true, 2000, 2000) {
+//                    val m = scheduledExecutionTime() / 1000
+//                    Timber.i("mBanners timer $m")
+//                    intMax--
+//                    var i = intMax % data.size
+//                    binding.banner = r.data()[i]
+//                }
             }
         })
 
@@ -46,6 +62,7 @@ class WeatherActivity : AppCompatActivity() {
             override fun onSuccess(r: IResult<List<Author>>) {
 //                tvDemo2.text = r.toString()
                 binding.author = r.data()[0]
+
 
             }
         })
