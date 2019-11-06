@@ -1,6 +1,7 @@
 package com.stonehiy.jetpackdemo.ui.list
 
 import androidx.lifecycle.ViewModel
+import androidx.lifecycle.viewModelScope
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
 import androidx.paging.PageKeyedDataSource
@@ -11,6 +12,8 @@ import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.CoreViewModel
 import io.github.stonehiy.lib.core.coroutineJob
+import io.github.stonehiy.lib.result.succeeded
+import kotlinx.coroutines.launch
 import timber.log.Timber
 
 
@@ -25,7 +28,6 @@ class ListViewModel : ViewModel() {
         coroutineJob({
             ApiSource.instance.getChapters()
         }, mChapters)
-
     }
 
 

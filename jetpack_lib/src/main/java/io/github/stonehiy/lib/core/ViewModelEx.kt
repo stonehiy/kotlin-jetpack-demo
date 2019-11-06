@@ -9,14 +9,15 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import timber.log.Timber
+import kotlin.coroutines.CoroutineContext
 
 
 /**
  * 开启协程（单任务）
  */
-inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) {
+inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, context: CoroutineContext = Dispatchers.Main) {
     viewModelScope.launch {
-        withContext(Dispatchers.IO) {
+        withContext(context) {
             Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
             // Heavy work
             liveData.postValue(SResult.Loading)

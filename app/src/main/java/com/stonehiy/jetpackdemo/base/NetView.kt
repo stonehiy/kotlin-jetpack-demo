@@ -10,11 +10,7 @@ import io.github.stonehiy.lib.util.ToastUtil
 
 class NetView constructor(private val context: Context, private val showLoading: Boolean = true) : IView {
 
-    private val progressDialog: ProgressDialog
-
-    init {
-        progressDialog = ProgressDialog(context)
-    }
+    private val progressDialog: ProgressDialog = ProgressDialog(context)
 
     override fun showLoading() {
         if (!showLoading) {
