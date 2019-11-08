@@ -37,8 +37,7 @@ class ListActivity : AppCompatActivity() {
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
-        pagedListLiveData.observe(this, Observer {
-            Timber.i("it = $it")
+        mModel.pagedListLiveData.observe(this, Observer {
             adapter.submitList(it)
         })
 
@@ -46,7 +45,7 @@ class ListActivity : AppCompatActivity() {
         mModel.mutableLiveData.observe(this, Observer {
             mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(NetView(this)) {
                 override fun onSuccess(r: IResult<List<Author>>) {
-                    it.callback.onResult(r.data(), 0, 1)
+                    it.callback.onResult(r.data(), null, 1)
                 }
 
             })
@@ -58,33 +57,7 @@ class ListActivity : AppCompatActivity() {
     }
 
 
-    private val dataSourceList = object : PageKeyedDataSource<Int, Author>() {
-        override fun loadInitial(params: LoadInitialParams<Int>, callback: LoadInitialCallback<Int, Author>) {
-            mModel.mutableLiveData.postValue(PageKeyedDataSourceLoadInitial<Int, Author>(params, callback))
-        }
-
-        override fun loadAfter(params: LoadParams<Int>, callback: LoadCallback<Int, Author>) {
-            Timber.i("loadAfter = ${params.key}")
-        }
-
-        override fun loadBefore(params: LoadParams<Int>, callback: LoadCallback<Int, Author>) {
-            Timber.i("loadBefore = ${params.key}")
-        }
-
-    }
 
 
-    private val factory = object : DataSource.Factory<Int, Author>() {
-        override fun create(): DataSource<Int, Author> {
-            return dataSourceList
-        }
-
-    }
-
-    private val pagedListLiveData = LivePagedListBuilder(factory, PagedList.Config.Builder()
-            .setPageSize(1)
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(1)
-            .build()).build()
 }
 
