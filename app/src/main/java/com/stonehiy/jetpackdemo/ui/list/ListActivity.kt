@@ -4,16 +4,15 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import androidx.databinding.DataBindingUtil
 import androidx.lifecycle.Observer
-import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.stonehiy.jetpackdemo.R
 import com.stonehiy.jetpackdemo.adapter.CustomAdapter
 import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityListBinding
 import com.stonehiy.jetpackdemo.entity.Author
+import com.stonehiy.jetpackdemo.entity.PagedListData
 import io.github.stonehiy.lib.core.CoreObserver
 import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.util.viewModelProvider
@@ -38,7 +37,7 @@ class ListActivity : AppCompatActivity() {
         })
 
         /*
-        mModel.mutableLiveDataLoadInitial.observe(this, Observer {
+        mModel.pageKeyedDataSourceLoadInitial.observe(this, Observer {
             mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(NetView(this)) {
                 override fun onSuccess(r: IResult<List<Author>>) {
                     it.callback.onResult(r.data(), null, 2)
@@ -46,7 +45,7 @@ class ListActivity : AppCompatActivity() {
 
             })
         })
-        mModel.mutableLiveDataLoadAfter.observe(this, Observer {
+        mModel.pageKeyedDataSourceLoadAfter.observe(this, Observer {
             mModel.mChapters.observe(this, object : CoreObserver<List<Author>>(NetView(this)) {
                 override fun onSuccess(r: IResult<List<Author>>) {
                     it.callback.onResult(r.data(), it.params.key + 1)
@@ -57,7 +56,7 @@ class ListActivity : AppCompatActivity() {
         */
         mModel.mediatorLiveData.addSource(mModel.mChapters, object : CoreObserver<List<Author>>(NetView(this)) {
             override fun onSuccess(r: IResult<List<Author>>) {
-                mModel.mediatorLiveData.value = ListData(r.data(), mModel.mutableLiveDataLoadInitial.value, mModel.mutableLiveDataLoadAfter.value)
+                mModel.mediatorLiveData.value = PagedListData(r.data(), mModel.mutableLiveDataLoadInitial.value, mModel.mutableLiveDataLoadAfter.value)
 
             }
 
@@ -65,11 +64,11 @@ class ListActivity : AppCompatActivity() {
 
 
         mModel.mediatorLiveData.observe(this, Observer {
-            if (null != it.mutableLiveDataLoadAfter) {
-                it.mutableLiveDataLoadAfter?.callback?.onResult(it.coreLiveData, it.mutableLiveDataLoadAfter.params.key - 1)
+            if (null != it.pageKeyedDataSourceLoadAfter) {
+                it.pageKeyedDataSourceLoadAfter?.callback?.onResult(it.list, it.pageKeyedDataSourceLoadAfter.params.key + 1)
                 return@Observer
             }
-            it.mutableLiveDataLoadInitial?.callback?.onResult(it.coreLiveData, null, 5)
+            it.pageKeyedDataSourceLoadInitial?.callback?.onResult(it.list, null, 1)
 
         })
 

@@ -16,6 +16,9 @@ class ListPageKeyedDataSource(val viewModel: ListViewModel) : PageKeyedDataSourc
 
     override fun loadAfter(params: PageKeyedDataSource.LoadParams<Int>, callback: PageKeyedDataSource.LoadCallback<Int, Author>) {
         Timber.i("loadAfter params = ${params.key}")
+        if (5 < params.key) {
+            return
+        }
         viewModel.getChapters()
         viewModel.mutableLiveDataLoadAfter.postValue(PageKeyedDataSourceLoadAfter(params, callback))
     }

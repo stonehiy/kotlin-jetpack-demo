@@ -1,7 +1,5 @@
 package com.stonehiy.jetpackdemo.ui.list
 
-import android.content.Context
-import android.icu.lang.UCharacter.GraphemeClusterBreak.L
 import androidx.lifecycle.*
 import androidx.paging.DataSource
 import androidx.paging.LivePagedListBuilder
@@ -10,9 +8,8 @@ import com.stonehiy.jetpackdemo.ApiSource
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadAfter
 import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadInitial
+import com.stonehiy.jetpackdemo.entity.PagedListData
 import io.github.stonehiy.lib.core.CoreLiveData
-import io.github.stonehiy.lib.core.CoreObserver
-import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.core.coroutineJob
 
 
@@ -25,7 +22,7 @@ class ListViewModel : ViewModel() {
     val mutableLiveDataLoadAfter = MutableLiveData<PageKeyedDataSourceLoadAfter<Int, Author>>()
 
 
-    val mediatorLiveData = MediatorLiveData<ListData>()
+    val mediatorLiveData = MediatorLiveData<PagedListData<Int, Author>>()
 
     private val factory = object : DataSource.Factory<Int, Author>() {
         override fun create(): DataSource<Int, Author> {
@@ -50,12 +47,5 @@ class ListViewModel : ViewModel() {
     }
 
 
-
-
 }
 
-data class ListData(
-        val coreLiveData: List<Author>,
-        val mutableLiveDataLoadInitial: PageKeyedDataSourceLoadInitial<Int, Author>?,
-        val mutableLiveDataLoadAfter: PageKeyedDataSourceLoadAfter<Int, Author>?
-)
