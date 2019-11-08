@@ -21,14 +21,18 @@ class ListActivity : AppCompatActivity() {
 
     private lateinit var mModel: ListViewModel
 
+    private lateinit var adapter: CustomAdapter
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         mModel = viewModelProvider(ViewModelProvider.AndroidViewModelFactory.getInstance(application))
 
         val binding: ActivityListBinding = DataBindingUtil.setContentView(this, R.layout.activity_list)
-
-        val adapter = CustomAdapter()
+        binding.viewModel = mModel
+        binding.activity = this
+        binding.lifecycleOwner = this
+        adapter = CustomAdapter()
         binding.recyclerView.adapter = adapter
         binding.recyclerView.layoutManager = LinearLayoutManager(this)
         binding.recyclerView.addItemDecoration(DividerItemDecoration(this, DividerItemDecoration.VERTICAL))
@@ -73,5 +77,11 @@ class ListActivity : AppCompatActivity() {
         })
 
 
+    }
+
+
+    fun refresh() {
+//        adapter.submitList(null)
+//        mModel.listPageKeyedDataSource.invalidate()
     }
 }

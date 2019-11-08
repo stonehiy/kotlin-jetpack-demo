@@ -11,6 +11,7 @@ import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadInitial
 import com.stonehiy.jetpackdemo.entity.PagedListData
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.coroutineJob
+import timber.log.Timber
 
 
 class ListViewModel : ViewModel() {
@@ -24,9 +25,11 @@ class ListViewModel : ViewModel() {
 
     val mediatorLiveData = MediatorLiveData<PagedListData<Int, Author>>()
 
+    val listPageKeyedDataSource = ListPageKeyedDataSource(this)
+
     private val factory = object : DataSource.Factory<Int, Author>() {
         override fun create(): DataSource<Int, Author> {
-            return ListPageKeyedDataSource(this@ListViewModel)
+            return listPageKeyedDataSource
         }
 
     }
@@ -45,6 +48,8 @@ class ListViewModel : ViewModel() {
 
 
     }
+
+
 
 
 }
