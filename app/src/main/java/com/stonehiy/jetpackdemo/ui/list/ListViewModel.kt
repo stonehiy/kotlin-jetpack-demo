@@ -1,20 +1,12 @@
 package com.stonehiy.jetpackdemo.ui.list
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import androidx.lifecycle.viewModelScope
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagedList
 import com.stonehiy.jetpackdemo.ApiSource
 import com.stonehiy.jetpackdemo.entity.Author
-import com.stonehiy.jetpackdemo.entity.Banner
+import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadInitial
 import io.github.stonehiy.lib.core.CoreLiveData
-import io.github.stonehiy.lib.core.CoreViewModel
 import io.github.stonehiy.lib.core.coroutineJob
-import io.github.stonehiy.lib.result.succeeded
-import kotlinx.coroutines.launch
-import timber.log.Timber
 
 
 class ListViewModel : ViewModel() {
@@ -22,6 +14,9 @@ class ListViewModel : ViewModel() {
 
     val mChapters = CoreLiveData<List<Author>>()
 
+    val mutableLiveData = MutableLiveData<PageKeyedDataSourceLoadInitial<Int, Author>>().apply {
+        getChapters()
+    }
 
 
     fun getChapters() {
