@@ -18,7 +18,8 @@ import kotlin.coroutines.CoroutineContext
  * 开启协程（单任务）
  */
 @Deprecated("")
-inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, coroutineScope: ViewModelCoroutineScope, context: CoroutineContext = Dispatchers.Main) {
+inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, coroutineScope: ViewModelCoroutineScope, context: CoroutineContext = Dispatchers.IO) {
+    Timber.i("ViewModel.coroutineJob: I'm working in thread ${Thread.currentThread().name}")
     coroutineScope.launch {
         withContext(context) {
             Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
