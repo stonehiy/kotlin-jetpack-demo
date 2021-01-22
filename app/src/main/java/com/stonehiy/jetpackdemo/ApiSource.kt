@@ -6,7 +6,7 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 
-
+@Deprecated("")
 object ApiSource {
 
     private const val BASE_URL = "https://wanandroid.com"
@@ -23,7 +23,6 @@ object ApiSource {
     val instance = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-            //.addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
             .client(okHttpClient)
             .build().create(ApiService::class.java)!!
 

@@ -25,6 +25,7 @@ import retrofit2.http.POST
  * --------------------------------------------------
  * </pre>
  */
+@Deprecated("")
 interface ApiService {
 
 
