@@ -65,7 +65,7 @@ dependencies {
 
 
 
-    api rootProject.ext.dependencies["retrofit2_kotlin_coroutines_adapter"]
+    //api rootProject.ext.dependencies["retrofit2_kotlin_coroutines_adapter"]
 
     api rootProject.ext.dependencies["retrofit"]
     api rootProject.ext.dependencies["okhttp"]
