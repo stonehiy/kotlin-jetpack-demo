@@ -17,7 +17,7 @@
 
 package io.github.stonehiy.lib.result
 
-import io.github.stonehiy.lib.exception.ServerException
+import io.github.stonehiy.lib.net.AppException
 
 
 /**
@@ -27,7 +27,7 @@ import io.github.stonehiy.lib.exception.ServerException
 sealed class SResult<out R> {
 
     data class Success<out T>(val data: T) : SResult<T>()
-    data class Error(val exception: ServerException) : SResult<Nothing>()
+    data class Error(val exception: AppException) : SResult<Nothing>()
     object Authentication401 : SResult<Nothing>()
     object Loading : SResult<Nothing>()
 

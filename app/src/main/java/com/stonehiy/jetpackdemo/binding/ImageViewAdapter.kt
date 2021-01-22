@@ -1,7 +1,7 @@
 package com.stonehiy.jetpackdemo.binding
 
 import android.widget.ImageView
-import androidx.databinding.BindingAdapter
+import android.databinding.BindingAdapter
 import com.stonehiy.jetpackdemo.glide.GlideUtil
 
 object ImageViewAdapter {

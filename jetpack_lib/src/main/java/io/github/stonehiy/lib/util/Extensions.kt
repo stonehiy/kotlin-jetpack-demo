@@ -16,19 +16,21 @@
 
 package io.github.stonehiy.lib.util
 
+import android.arch.lifecycle.*
 import android.os.Build
 import android.os.Parcel
+import android.support.annotation.LayoutRes
+import android.support.annotation.RequiresApi
+import android.support.v4.app.Fragment
+import android.support.v4.app.FragmentActivity
+import android.support.v4.app.FragmentManager
+import android.support.v4.app.FragmentTransaction
+import android.support.v4.os.ParcelCompat
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.annotation.LayoutRes
-import androidx.annotation.RequiresApi
-import androidx.core.os.ParcelCompat
-import androidx.fragment.app.Fragment
-import androidx.fragment.app.FragmentActivity
-import androidx.fragment.app.FragmentManager
-import androidx.fragment.app.FragmentTransaction
-import androidx.lifecycle.*
+
+
 import java.time.ZonedDateTime
 
 /** Convenience for callbacks/listeners whose return value indicates an event was consumed. */

@@ -1,17 +1,14 @@
 package com.stonehiy.jetpackdemo.ui.list
 
-import androidx.lifecycle.*
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PagedList
+
+import android.arch.lifecycle.MediatorLiveData
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
+import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
 import com.stonehiy.jetpackdemo.ApiSource
 import com.stonehiy.jetpackdemo.entity.Author
-import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadAfter
-import com.stonehiy.jetpackdemo.entity.PageKeyedDataSourceLoadInitial
-import com.stonehiy.jetpackdemo.entity.PagedListData
 import io.github.stonehiy.lib.core.CoreLiveData
 import io.github.stonehiy.lib.core.coroutineJob
-import timber.log.Timber
 
 
 class ListViewModel : ViewModel() {
@@ -19,32 +16,21 @@ class ListViewModel : ViewModel() {
 
     val mChapters = CoreLiveData<List<Author>>()
 
-    val mutableLiveDataLoadInitial = MutableLiveData<PageKeyedDataSourceLoadInitial<Int, Author>>()
-    val mutableLiveDataLoadAfter = MutableLiveData<PageKeyedDataSourceLoadAfter<Int, Author>>()
+//    val mutableLiveDataLoadInitial = MutableLiveData<PageKeyedDataSourceLoadInitial<Int, Author>>()
+//    val mutableLiveDataLoadAfter = MutableLiveData<PageKeyedDataSourceLoadAfter<Int, Author>>()
+//
+//
+//    val mediatorLiveData = MediatorLiveData<PagedListData<Int, Author>>()
 
+//    val listPageKeyedDataSource = ListPageKeyedDataSource(this)
 
-    val mediatorLiveData = MediatorLiveData<PagedListData<Int, Author>>()
-
-    val listPageKeyedDataSource = ListPageKeyedDataSource(this)
-
-    private val factory = object : DataSource.Factory<Int, Author>() {
-        override fun create(): DataSource<Int, Author> {
-            return listPageKeyedDataSource
-        }
-
-    }
-
-    val pagedListLiveData = LivePagedListBuilder(factory, PagedList.Config.Builder()
-            .setPageSize(1)
-            .setEnablePlaceholders(true)
-            .setInitialLoadSizeHint(1)
-            .build()).build()
+   val viewModelCoroutineScope = ViewModelCoroutineScope()
 
 
     fun getChapters() {
         coroutineJob({
             ApiSource.instance.getChapters()
-        }, mChapters)
+        }, mChapters,viewModelCoroutineScope)
 
 
     }

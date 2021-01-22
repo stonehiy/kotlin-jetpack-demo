@@ -18,7 +18,7 @@
     </data>
 
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <android.support.constraint.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         tools:context=".WeatherActivity">
@@ -46,5 +46,5 @@
             app:layout_constraintTop_toBottomOf="@+id/tvDemo2" />
 
 
-    </androidx.constraintlayout.widget.ConstraintLayout>
+    </android.support.constraint.ConstraintLayout>
 </layout>

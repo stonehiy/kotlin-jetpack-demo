@@ -1,16 +1,9 @@
 package com.stonehiy.jetpackdemo
 
+import android.arch.lifecycle.ViewModelProvider
+import android.databinding.DataBindingUtil
 import android.os.Bundle
-import android.text.style.TtsSpan
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
-import androidx.paging.DataSource
-import androidx.paging.LivePagedListBuilder
-import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagedList
-import com.stonehiy.jetpackdemo.adapter.CustomAdapter
+import android.support.v7.app.AppCompatActivity
 import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityWeatherBinding
 import com.stonehiy.jetpackdemo.entity.Author
@@ -18,7 +11,6 @@ import com.stonehiy.jetpackdemo.entity.Banner
 import io.github.stonehiy.lib.core.CoreObserver
 import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.util.viewModelProvider
-import timber.log.Timber
 
 class WeatherActivity : AppCompatActivity() {
 

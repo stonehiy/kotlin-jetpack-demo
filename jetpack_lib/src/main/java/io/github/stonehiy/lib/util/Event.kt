@@ -14,9 +14,10 @@
  * limitations under the License.
  */
 
-package io.github.stonehiy.lib.result
+package io.github.stonehiy.lib.util
 
-import androidx.lifecycle.Observer
+import android.arch.lifecycle.Observer
+
 
 /**
  * Used as a wrapper for data that is exposed via a LiveData that represents an event.

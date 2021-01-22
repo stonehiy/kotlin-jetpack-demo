@@ -1,6 +1,5 @@
 package io.github.stonehiy.lib.core
 
-import android.content.Context
 
 interface IView {
 

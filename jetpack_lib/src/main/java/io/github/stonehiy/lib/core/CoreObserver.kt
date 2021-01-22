@@ -1,7 +1,8 @@
 package io.github.stonehiy.lib.core
 
-import androidx.lifecycle.Observer
-import io.github.stonehiy.lib.exception.ServerException
+
+import android.arch.lifecycle.Observer
+import io.github.stonehiy.lib.net.AppException
 import io.github.stonehiy.lib.result.SResult
 
 
@@ -39,8 +40,8 @@ abstract class CoreObserver<T> constructor(val view: IView) : Observer<SResult<o
 
     abstract fun onSuccess(r: IResult<T>)
 
-    open fun onError(exception: ServerException) {
-        view.showError(exception.msg)
+    open fun onError(exception: AppException) {
+        view.showError(exception.errorMsg)
     }
 
     open fun onLoading() {

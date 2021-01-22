@@ -1,10 +1,11 @@
 package io.github.stonehiy.lib.core
 
-import androidx.lifecycle.*
-import io.github.stonehiy.lib.exception.ApiException
-import io.github.stonehiy.lib.exception.ServerException
+import android.arch.lifecycle.ViewModel
+import io.github.stonehiy.lib.net.AppException
+import io.github.stonehiy.lib.net.ExceptionHandle
 import io.github.stonehiy.lib.result.SResult
-import kotlinx.coroutines.*
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
 import timber.log.Timber
 import java.lang.Exception
 
@@ -30,12 +31,12 @@ open class CoreViewModel : ViewModel() {
                 if (body.authentication401()) {
                     liveData.postValue(SResult.Authentication401)
                 } else {
-                    liveData.postValue(SResult.Error(ServerException.handleException(ApiException(body.errorMsg()))))
+                    liveData.postValue(SResult.Error(ExceptionHandle.handleException(AppException(body.errorCode(),body.errorMsg()))))
                 }
             }
         } catch (e: Exception) {
             Timber.w(e)
-            liveData.postValue(SResult.Error(ServerException.handleException(e)))
+            liveData.postValue(SResult.Error(ExceptionHandle.handleException(e)))
         }
     }
 
@@ -44,18 +45,6 @@ open class CoreViewModel : ViewModel() {
     }
 
 
-    /**
-     * 开启协程（单任务）
-     *
-     */
-    @Deprecated("Deprecated")
-    fun <T> coroutineJob(block: suspend () -> IResult<T>, liveData: CoreLiveData<T>) {
-        viewModelScope.launch {
-
-            coroutineJobScope(block, liveData)
-
-        }
-    }
 
 
 }

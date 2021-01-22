@@ -1,18 +1,17 @@
 package com.stonehiy.jetpackdemo
 
+import android.arch.lifecycle.Observer
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.util.Log
 import android.view.View
-import androidx.core.content.ContextCompat.startActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProvider
 import com.stonehiy.jetpackdemo.databinding.ActivityMainBinding
 import com.stonehiy.jetpackdemo.ui.list.ListActivity
-import io.github.stonehiy.lib.util.viewModelProvider
 import kotlinx.android.synthetic.main.activity_main.*
+import io.github.stonehiy.lib.util.viewModelProvider as viewModelProvider
 
 class MainActivity : AppCompatActivity() {
     val TAG = AppCompatActivity::class.java.name

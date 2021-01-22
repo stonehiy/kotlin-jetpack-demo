@@ -1,7 +1,8 @@
 package com.stonehiy.jetpackdemo.ui.login
 
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
+import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
 import com.stonehiy.jetpackdemo.ApiSource
 import com.stonehiy.jetpackdemo.entity.User
 import io.github.stonehiy.lib.core.CoreLiveData
@@ -28,7 +29,7 @@ class LoginViewModel : ViewModel() {
         val mapOf = mapOf<String, String>("username" to username.value!!, "password" to password.value!!)
         coroutineJob({
             ApiSource.instance.login(mapOf)
-        }, mLogin)
+        }, mLogin, ViewModelCoroutineScope())
 
     }
 }

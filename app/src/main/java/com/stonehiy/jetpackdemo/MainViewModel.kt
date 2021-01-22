@@ -1,9 +1,7 @@
 package com.stonehiy.jetpackdemo
 
-import android.view.View
-import androidx.lifecycle.MutableLiveData
-import androidx.lifecycle.ViewModel
-import kotlinx.android.synthetic.main.activity_main.view.*
+import android.arch.lifecycle.MutableLiveData
+import android.arch.lifecycle.ViewModel
 import timber.log.Timber
 
 /**

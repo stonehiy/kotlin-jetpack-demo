@@ -1,11 +1,11 @@
 package com.stonehiy.jetpackdemo
 
-import androidx.paging.PagedList
+
 import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.Banner
 import com.stonehiy.jetpackdemo.entity.ResultEntity
 import com.stonehiy.jetpackdemo.entity.User
-import retrofit2.Response
+
 import retrofit2.http.FieldMap
 import retrofit2.http.FormUrlEncoded
 import retrofit2.http.GET

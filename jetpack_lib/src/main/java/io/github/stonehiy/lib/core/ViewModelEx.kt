@@ -1,12 +1,15 @@
 package io.github.stonehiy.lib.core
 
-import androidx.lifecycle.*
-import io.github.stonehiy.lib.exception.ApiException
-import io.github.stonehiy.lib.exception.ServerException
+
+import android.arch.lifecycle.ViewModel
+import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
+import io.github.stonehiy.lib.net.AppException
+import io.github.stonehiy.lib.net.ExceptionHandle
 import io.github.stonehiy.lib.result.SResult
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
+
 import timber.log.Timber
 import kotlin.coroutines.CoroutineContext
 
@@ -14,8 +17,8 @@ import kotlin.coroutines.CoroutineContext
 /**
  * 开启协程（单任务）
  */
-inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, context: CoroutineContext = Dispatchers.Main) {
-    viewModelScope.launch {
+inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, coroutineScope: ViewModelCoroutineScope, context: CoroutineContext = Dispatchers.Main) {
+    coroutineScope.launch {
         withContext(context) {
             Timber.i("coroutineJobScope: I'm working in thread ${Thread.currentThread().name}")
             // Heavy work
@@ -29,12 +32,12 @@ inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, 
                     if (body.authentication401()) {
                         liveData.postValue(SResult.Authentication401)
                     } else {
-                        liveData.postValue(SResult.Error(ServerException.handleException(ApiException(body.errorMsg()))))
+                        liveData.postValue(SResult.Error(ExceptionHandle.handleException(AppException(body.errorCode(), body.errorMsg()))))
                     }
                 }
             } catch (e: Exception) {
                 Timber.w(e)
-                liveData.postValue(SResult.Error(ServerException.handleException(e)))
+                liveData.postValue(SResult.Error(ExceptionHandle.handleException(e)))
             }
 
         }

@@ -1,5 +1,6 @@
 package com.stonehiy.jetpackdemo
 
+import com.jakewharton.retrofit2.adapter.kotlin.coroutines.CoroutineCallAdapterFactory
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -23,7 +24,7 @@ object ApiSource {
     val instance = Retrofit.Builder()
             .baseUrl(BASE_URL)
             .addConverterFactory(GsonConverterFactory.create())
-//                .addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
+            //.addCallAdapterFactory(CoroutineCallAdapterFactory.invoke())
             .client(okHttpClient)
             .build().create(ApiService::class.java)!!
 

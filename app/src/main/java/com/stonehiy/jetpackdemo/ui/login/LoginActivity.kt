@@ -1,18 +1,16 @@
 package com.stonehiy.jetpackdemo.ui.login
 
+import android.arch.lifecycle.ViewModelProvider
 import android.content.Intent
+import android.databinding.DataBindingUtil
 import android.os.Bundle
+import android.support.v7.app.AppCompatActivity
 import android.widget.Toast
-import androidx.appcompat.app.AppCompatActivity
-import androidx.databinding.DataBindingUtil
-import androidx.lifecycle.ViewModelProvider
 import com.stonehiy.jetpackdemo.MainActivity
 import com.stonehiy.jetpackdemo.R
 import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityLoginBinding
-import com.stonehiy.jetpackdemo.entity.Author
 import com.stonehiy.jetpackdemo.entity.User
-import io.github.stonehiy.lib.core.CoreActivity
 import io.github.stonehiy.lib.core.CoreObserver
 import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.util.ToastUtil
