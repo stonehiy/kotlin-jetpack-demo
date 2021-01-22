@@ -10,9 +10,9 @@ import android.net.ConnectivityManager
 import android.net.Uri
 import io.github.stonehiy.lib.BuildConfig
 import io.github.stonehiy.lib.CrashReportingTree
-import io.github.stonehiy.lib.core.ext.lifecycle.KtxAppLifeObserver
+import io.github.stonehiy.lib.ext.lifecycle.KtxAppLifeObserver
 import io.github.stonehiy.lib.net.manager.NetworkStateReceive
-import io.github.stonehiy.lib.core.ext.lifecycle.KtxLifeCycleCallBack
+import io.github.stonehiy.lib.ext.lifecycle.KtxLifeCycleCallBack
 import timber.log.Timber
 
 
@@ -40,10 +40,11 @@ class Ktx : ContentProvider() {
     private fun install(application: Application) {
         app = application
         initTimber()
+        //Timber.d("Ktx install")
         mNetworkStateReceive = NetworkStateReceive()
         app.registerReceiver(
-            mNetworkStateReceive,
-            IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
+                mNetworkStateReceive,
+                IntentFilter(ConnectivityManager.CONNECTIVITY_ACTION)
         )
 
         if (watchActivityLife) application.registerActivityLifecycleCallbacks(KtxLifeCycleCallBack())
@@ -51,7 +52,7 @@ class Ktx : ContentProvider() {
     }
 
 
-    private fun initTimber(){
+    private fun initTimber() {
         if (BuildConfig.DEBUG) {
             Timber.plant(Timber.DebugTree())
         } else {
@@ -63,19 +64,19 @@ class Ktx : ContentProvider() {
     override fun insert(uri: Uri, values: ContentValues?): Uri? = null
 
     override fun query(
-        uri: Uri,
-        projection: Array<String>?,
-        selection: String?,
-        selectionArgs: Array<String>?,
-        sortOrder: String?
+            uri: Uri,
+            projection: Array<String>?,
+            selection: String?,
+            selectionArgs: Array<String>?,
+            sortOrder: String?
     ): Cursor? = null
 
 
     override fun update(
-        uri: Uri,
-        values: ContentValues?,
-        selection: String?,
-        selectionArgs: Array<String>?
+            uri: Uri,
+            values: ContentValues?,
+            selection: String?,
+            selectionArgs: Array<String>?
     ): Int = 0
 
     override fun delete(uri: Uri, selection: String?, selectionArgs: Array<String>?): Int = 0

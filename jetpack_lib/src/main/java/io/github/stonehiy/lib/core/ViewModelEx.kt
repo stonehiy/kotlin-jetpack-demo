@@ -17,6 +17,7 @@ import kotlin.coroutines.CoroutineContext
 /**
  * 开启协程（单任务）
  */
+@Deprecated("")
 inline fun <T> ViewModel.coroutineJob(noinline block: suspend () -> IResult<T>, liveData: CoreLiveData<T>, coroutineScope: ViewModelCoroutineScope, context: CoroutineContext = Dispatchers.Main) {
     coroutineScope.launch {
         withContext(context) {

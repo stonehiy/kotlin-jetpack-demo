@@ -24,6 +24,7 @@ import io.github.stonehiy.lib.net.AppException
  * A generic class that holds a value with its loading status.
  * @param <T>
  */
+@Deprecated("")
 sealed class SResult<out R> {
 
     data class Success<out T>(val data: T) : SResult<T>()

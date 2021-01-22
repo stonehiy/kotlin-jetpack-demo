@@ -1,6 +1,6 @@
 package io.github.stonehiy.lib.core
 
-
+@Deprecated("")
 interface IView {
 
     /**

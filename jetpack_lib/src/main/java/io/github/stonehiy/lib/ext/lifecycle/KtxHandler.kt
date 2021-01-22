@@ -1,4 +1,4 @@
-package io.github.stonehiy.lib.core.ext.lifecycle
+package io.github.stonehiy.lib.ext.lifecycle
 
 import android.arch.lifecycle.Lifecycle
 import android.arch.lifecycle.LifecycleObserver

@@ -1,9 +1,8 @@
-package io.github.stonehiy.lib.core.ext.lifecycle
+package io.github.stonehiy.lib.ext.lifecycle
 
 import android.app.Activity
 import android.app.Application
 import android.os.Bundle
-import io.github.stonehiy.lib.core.ext.lifecycle.KtxActivityManger
 
 
 /**

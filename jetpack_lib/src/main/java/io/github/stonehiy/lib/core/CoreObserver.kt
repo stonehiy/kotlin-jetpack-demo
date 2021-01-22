@@ -5,7 +5,7 @@ import android.arch.lifecycle.Observer
 import io.github.stonehiy.lib.net.AppException
 import io.github.stonehiy.lib.result.SResult
 
-
+@Deprecated("")
 abstract class CoreObserver<T> constructor(val view: IView) : Observer<SResult<out IResult<T>>> {
 
 
