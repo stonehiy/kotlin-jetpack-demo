@@ -11,11 +11,7 @@ import android.support.v7.widget.LinearLayoutManager
 
 import com.stonehiy.jetpackdemo.R
 
-import com.stonehiy.jetpackdemo.base.NetView
 import com.stonehiy.jetpackdemo.databinding.ActivityListBinding
-import com.stonehiy.jetpackdemo.entity.Author
-import io.github.stonehiy.lib.core.CoreObserver
-import io.github.stonehiy.lib.core.IResult
 import io.github.stonehiy.lib.util.viewModelProvider
 
 

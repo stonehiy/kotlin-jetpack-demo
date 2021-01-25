@@ -1,14 +1,13 @@
 package com.stonehiy.jetpackdemo.ui.login
 
 import android.arch.lifecycle.MutableLiveData
-import android.arch.lifecycle.ViewModel
-import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
-import com.stonehiy.jetpackdemo.ApiSource
+import com.stonehiy.jetpackdemo.data.net.apiService
 import com.stonehiy.jetpackdemo.entity.User
-import io.github.stonehiy.lib.core.CoreLiveData
-import io.github.stonehiy.lib.core.coroutineJob
+import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
+import io.github.stonehiy.lib.ext.request
+import io.github.stonehiy.lib.state.ResultState
 
-class LoginViewModel : ViewModel() {
+class LoginViewModel : BaseViewModel() {
 
 
     // Two-way databinding, exposing MutableLiveData
@@ -20,16 +19,26 @@ class LoginViewModel : ViewModel() {
         password.value = "123456"
     }
 
+    val loginUser = MutableLiveData<User>()
+    val loginResult = MutableLiveData<ResultState<User>>()
 
-    val mLogin: CoreLiveData<User> = CoreLiveData()
     /**
      * 登录
      */
     fun login() {
-        val mapOf = mapOf<String, String>("username" to username.value!!, "password" to password.value!!)
-        coroutineJob({
-            ApiSource.instance.login(mapOf)
-        }, mLogin, ViewModelCoroutineScope())
+//        request({ apiService.login(username.value!!, password.value!!) },
+//                loginResult,
+//                true
+//        )
+
+
+        request({ apiService.login(username.value!!, password.value!!) },
+                {user->{
+                    loginUser.postValue(user)
+                }}
+
+        )
 
     }
+
 }

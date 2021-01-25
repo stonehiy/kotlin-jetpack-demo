@@ -8,6 +8,7 @@ import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
 import io.github.stonehiy.lib.net.manager.NetState
 import io.github.stonehiy.lib.net.manager.NetworkStateManager
 import io.github.stonehiy.lib.ext.getVmClazz
+import timber.log.Timber
 
 /**
  * 描述　: ViewModelActivity基类，把ViewModel注入进来了
@@ -52,7 +53,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     /**
      * 网络变化监听 子类重写
      */
-    open fun onNetworkStateChanged(netState: NetState?) {}
+    open fun onNetworkStateChanged(netState: NetState?) {
+        Timber.d("onNetworkStateChanged netState = ${netState?.isSuccess}")
+    }
 
     /**
      * 创建viewModel
@@ -84,8 +87,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
      * 将非该Activity绑定的ViewModel添加 loading回调 防止出现请求时不显示 loading 弹窗bug
      * @param viewModels Array<out BaseViewModel>
      */
-    protected fun addLoadingObserve(vararg viewModels: BaseViewModel){
-        viewModels.forEach {viewModel ->
+    protected fun addLoadingObserve(vararg viewModels: BaseViewModel) {
+        viewModels.forEach { viewModel ->
             //显示弹窗
             viewModel.loadingChange.showDialog.observe(this, Observer {
                 showLoading(it)

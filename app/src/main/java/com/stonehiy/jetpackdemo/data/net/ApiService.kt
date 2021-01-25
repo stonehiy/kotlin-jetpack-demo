@@ -8,8 +8,6 @@ import retrofit2.Response
 import retrofit2.http.*
 
 /**
- * 作者　: hegaojian
- * 时间　: 2019/12/23
  * 描述　: 网络API
  */
 interface ApiService {
