@@ -13,6 +13,7 @@ import io.github.stonehiy.lib.ext.parseState
 import io.github.stonehiy.lib.util.ToastUtil
 
 
+
 class LoginActivity : CoreActivity<LoginViewModel, ActivityLoginBinding>() {
 
 

@@ -83,6 +83,7 @@ dependencies {
     api rootProject.ext.dependencies["live-event-bus"]
     api rootProject.ext.dependencies["timber"]
     api rootProject.ext.dependencies["kotlinx_coroutines_core"]
+    api rootProject.ext.dependencies["kotlinx_coroutines_android"]
 
 
 

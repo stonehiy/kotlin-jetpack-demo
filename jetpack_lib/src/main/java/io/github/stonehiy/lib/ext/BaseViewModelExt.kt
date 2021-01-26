@@ -56,10 +56,10 @@ fun <T> BaseVmActivity<*>.parseState(
  *
  */
 fun <T> BaseVmFragment<*>.parseState(
-    resultState: ResultState<T>,
-    onSuccess: (T?) -> Unit,
-    onError: ((AppException) -> Unit)? = null,
-    onLoading: (() -> Unit)? = null
+        resultState: ResultState<T>,
+        onSuccess: (T?) -> Unit,
+        onError: ((AppException) -> Unit)? = null,
+        onLoading: (() -> Unit)? = null
 ) {
     when (resultState) {
         is ResultState.Loading -> {
@@ -85,37 +85,11 @@ fun <T> BaseVmFragment<*>.parseState(
  * @param isShowDialog 是否显示加载框
  * @param loadingMessage 加载框提示内容
  */
-fun <T> BaseViewModel.request(
-        block: suspend () -> BaseResponse<T>,
+fun <T> BaseViewModel.requestNoCheck(
+        block: suspend () -> T,
         resultState: MutableLiveData<ResultState<T>>,
         isShowDialog: Boolean = false,
         loadingMessage: String = "请求网络中..."
-): Job {
-    return viewModelScope.launch {
-        runCatching {
-            if (isShowDialog) resultState.value = ResultState.onAppLoading(loadingMessage)
-            //请求体
-            block()
-        }.onSuccess {
-            resultState.paresResult(it)
-        }.onFailure {
-            resultState.paresException(it)
-        }
-    }
-}
-
-/**
- * net request 不校验请求结果数据是否是成功
- * @param block 请求体方法
- * @param resultState 请求回调的ResultState数据
- * @param isShowDialog 是否显示加载框
- * @param loadingMessage 加载框提示内容
- */
-fun <T> BaseViewModel.requestNoCheck(
-    block: suspend () -> T,
-    resultState: MutableLiveData<ResultState<T>>,
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
 ): Job {
     return viewModelScope.launch {
         runCatching {
@@ -139,12 +113,13 @@ fun <T> BaseViewModel.requestNoCheck(
  * @param loadingMessage 加载框提示内容
  */
 fun <T> BaseViewModel.request(
-    block: suspend () -> BaseResponse<T>,
-    success: (T?) -> Unit,
-    error: (AppException) -> Unit = {},
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中...",
-    onTokenOut: ((String) -> Unit)? = null
+        block: suspend () -> BaseResponse<T>,
+        success: (T?) -> Unit,
+        error: (AppException) -> Unit = {},
+        showError: (AppException) -> Boolean = {appException-> true},
+        isShowDialog: Boolean = false,
+        loadingMessage: String = "请求网络中...",
+        onTokenOut: ((String) -> Unit)? = null
 ): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     return viewModelScope.launch {
@@ -157,19 +132,28 @@ fun <T> BaseViewModel.request(
             loadingChange.dismissDialog.postValue(false)
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it) { t -> success(t)
+                executeResponse(it) { t ->
+                    success(t)
                 }
             }.onFailure { e ->
                 //打印错误消息
                 //失败回调
-                error(ExceptionHandle.handleException(e))
+                val appException = ExceptionHandle.handleException(e)
+                error(appException)
+                if(showError(appException)){
+                    showErrorMessage.showErrorToast.postValue(appException.errorMsg)
+                }
             }
         }.onFailure {
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
             //失败回调
-            error(ExceptionHandle.handleException(it))
+            val appException = ExceptionHandle.handleException(it)
+            error(appException)
+            if(showError(appException)){
+                showErrorMessage.showErrorToast.postValue(appException.errorMsg)
+            }
         }
     }
 }
@@ -183,11 +167,11 @@ fun <T> BaseViewModel.request(
  * @param loadingMessage 加载框提示内容
  */
 fun <T> BaseViewModel.requestNoCheck(
-    block: suspend () -> T,
-    success: (T) -> Unit,
-    error: (AppException) -> Unit = {},
-    isShowDialog: Boolean = false,
-    loadingMessage: String = "请求网络中..."
+        block: suspend () -> T,
+        success: (T) -> Unit,
+        error: (AppException) -> Unit = {},
+        isShowDialog: Boolean = false,
+        loadingMessage: String = "请求网络中..."
 ): Job {
     //如果需要弹窗 通知Activity/fragment弹窗
     if (isShowDialog) loadingChange.showDialog.postValue(loadingMessage)
@@ -214,8 +198,8 @@ fun <T> BaseViewModel.requestNoCheck(
  * 请求结果过滤，判断请求服务器请求结果是否成功，不成功则会抛出异常
  */
 suspend fun <T> executeResponse(
-    response: BaseResponse<T>,
-    success: suspend CoroutineScope.(T?) -> Unit
+        response: BaseResponse<T>,
+        success: suspend CoroutineScope.(T?) -> Unit
 ) {
     coroutineScope {
         when {
@@ -224,9 +208,9 @@ suspend fun <T> executeResponse(
             }
             else -> {
                 throw AppException(
-                    response.getResponseCode(),
-                    response.getResponseMsg(),
-                    response.getResponseMsg()
+                        response.getResponseCode(),
+                        response.getResponseMsg(),
+                        response.getResponseMsg()
                 )
             }
         }
@@ -240,12 +224,12 @@ suspend fun <T> executeResponse(
  * @param error 失败回调 可不给
  */
 fun <T> BaseViewModel.launch(
-    block: () -> T,
-    success: (T) -> Unit,
-    error: (Throwable) -> Unit = {}
+        block: () -> T,
+        success: (T) -> Unit,
+        error: (Throwable) -> Unit = {}
 ) {
     viewModelScope.launch {
-        kotlin.runCatching {
+        runCatching {
             withContext(Dispatchers.IO) {
                 block()
             }

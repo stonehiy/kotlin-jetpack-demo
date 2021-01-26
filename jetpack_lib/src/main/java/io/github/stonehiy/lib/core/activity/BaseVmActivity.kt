@@ -8,6 +8,7 @@ import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
 import io.github.stonehiy.lib.net.manager.NetState
 import io.github.stonehiy.lib.net.manager.NetworkStateManager
 import io.github.stonehiy.lib.ext.getVmClazz
+import io.github.stonehiy.lib.util.ToastUtil
 import timber.log.Timber
 
 /**
@@ -29,6 +30,10 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     abstract fun showLoading(message: String? = "请求网络中...")
 
     abstract fun dismissLoading()
+
+    fun showError(message: String?) {
+        ToastUtil.show(message)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,6 +85,11 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         //关闭弹窗
         mViewModel.loadingChange.dismissDialog.observe(this, Observer {
             dismissLoading()
+        })
+
+        mViewModel.showErrorMessage.showErrorToast.observe(this, Observer {
+            showError(it)
+
         })
     }
 

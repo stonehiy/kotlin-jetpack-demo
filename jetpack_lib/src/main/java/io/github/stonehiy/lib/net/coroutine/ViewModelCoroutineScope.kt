@@ -1,4 +1,4 @@
-package com.qhebusbar.basis.coroutine
+package io.github.stonehiy.lib.net.coroutine
 
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -13,10 +13,10 @@ class ViewModelCoroutineScope : CoroutineScope {
 
 
     override val coroutineContext: CoroutineContext
-        get() = Dispatchers.Default + job
+        get() = Dispatchers.Main + job
 
     // 当生命周期销毁时，结束所有子协程
-    fun close() {
+    fun cancel() {
         job.cancel()
     }
 

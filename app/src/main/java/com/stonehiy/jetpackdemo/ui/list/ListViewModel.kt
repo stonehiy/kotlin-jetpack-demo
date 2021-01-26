@@ -1,11 +1,8 @@
 package com.stonehiy.jetpackdemo.ui.list
 
 
-import android.arch.lifecycle.MediatorLiveData
-import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
-import com.stonehiy.jetpackdemo.entity.Author
+import io.github.stonehiy.lib.net.coroutine.ViewModelCoroutineScope
 
 
 class ListViewModel : ViewModel() {

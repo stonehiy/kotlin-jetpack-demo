@@ -2,8 +2,7 @@ package io.github.stonehiy.lib.core.viewmodel
 
 import android.arch.lifecycle.MutableLiveData
 import android.arch.lifecycle.ViewModel
-import com.qhebusbar.basis.coroutine.ViewModelCoroutineScope
-import kotlinx.coroutines.CoroutineScope
+import io.github.stonehiy.lib.net.coroutine.ViewModelCoroutineScope
 import kotlinx.coroutines.cancel
 
 
@@ -14,6 +13,7 @@ open class BaseViewModel : ViewModel() {
     val viewModelScope = ViewModelCoroutineScope()
 
     val loadingChange: UiLoadingChange by lazy { UiLoadingChange() }
+    val showErrorMessage: ShowErrorMessage by lazy { ShowErrorMessage() }
 
     /**
      * 内置封装好的可通知Activity/fragment 显示隐藏加载框 因为需要跟网络请求显示隐藏loading配套才加的，不然我加他个鸡儿加
@@ -24,6 +24,10 @@ open class BaseViewModel : ViewModel() {
 
         //隐藏
         val dismissDialog by lazy { MutableLiveData<Boolean>() }
+    }
+
+    inner class ShowErrorMessage {
+        val showErrorToast by lazy { MutableLiveData<String>() }
     }
 
     override fun onCleared() {

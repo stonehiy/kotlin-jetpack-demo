@@ -26,16 +26,16 @@ class LoginViewModel : BaseViewModel() {
      * 登录
      */
     fun login() {
-//        request({ apiService.login(username.value!!, password.value!!) },
-//                loginResult,
-//                true
-//        )
-
-
-        request({ apiService.login(username.value!!, password.value!!) },
-                {user->{
-                    loginUser.postValue(user)
-                }}
+        request(
+                {
+                    apiService.login(username.value!!, password.value!!)
+                },
+                { user ->
+                    run {
+                        loginUser.value = user
+                    }
+                },
+                isShowDialog = true
 
         )
 
