@@ -1,13 +1,13 @@
-package me.hgj.jetpackmvvm.base.activity
+package io.github.stonehiy.lib.core.activity
 
 import android.arch.lifecycle.Observer
 import android.arch.lifecycle.ViewModelProvider
 import android.os.Bundle
 import android.support.v7.app.AppCompatActivity
 import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
+import io.github.stonehiy.lib.ext.getVmClazz
 import io.github.stonehiy.lib.net.manager.NetState
 import io.github.stonehiy.lib.net.manager.NetworkStateManager
-import io.github.stonehiy.lib.ext.getVmClazz
 import io.github.stonehiy.lib.util.ToastUtil
 import timber.log.Timber
 
@@ -31,9 +31,14 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
 
     abstract fun dismissLoading()
 
-    fun showError(message: String?) {
+    abstract fun reLogin()
+
+    protected fun showError(message: String?) {
         ToastUtil.show(message)
     }
+
+
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +47,7 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         } else {
             initDataBind()
         }
+        initTitleBar()
         init(savedInstanceState)
     }
 
@@ -54,6 +60,8 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
             onNetworkStateChanged(it)
         })
     }
+
+    open fun initTitleBar() {}
 
     /**
      * 网络变化监听 子类重写
@@ -90,6 +98,9 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
         mViewModel.showErrorMessage.showErrorToast.observe(this, Observer {
             showError(it)
 
+        })
+        mViewModel.hasLogin.reLogin.observe(this, Observer {
+            reLogin()
         })
     }
 

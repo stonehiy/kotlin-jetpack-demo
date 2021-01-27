@@ -119,6 +119,8 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
     abstract fun showLoading(message: String? = "请求网络中...")
 
     abstract fun dismissLoading()
+    abstract fun showError(message: String?)
+    abstract fun reLogin()
 
     /**
      * 注册 UI 事件
@@ -129,6 +131,14 @@ abstract class BaseVmFragment<VM : BaseViewModel> : Fragment() {
         })
         mViewModel.loadingChange.dismissDialog.observe(this, Observer {
             dismissLoading()
+        })
+
+        mViewModel.showErrorMessage.showErrorToast.observe(this, Observer {
+            showError(it)
+
+        })
+        mViewModel.hasLogin.reLogin.observe(this, Observer {
+            reLogin()
         })
     }
 

@@ -29,4 +29,9 @@ abstract class CoreActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     override fun createObserver() {
 
     }
+
+    override fun reLogin() {
+    }
+
+
 }

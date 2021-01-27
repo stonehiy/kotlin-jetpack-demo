@@ -10,7 +10,8 @@ import io.github.stonehiy.lib.state.ResultState
 import io.github.stonehiy.lib.state.paresException
 import io.github.stonehiy.lib.state.paresResult
 import kotlinx.coroutines.*
-import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
+import io.github.stonehiy.lib.core.activity.BaseVmActivity
+import timber.log.Timber
 
 
 /**
@@ -116,8 +117,9 @@ fun <T> BaseViewModel.request(
         block: suspend () -> BaseResponse<T>,
         success: (T?) -> Unit,
         error: (AppException) -> Unit = {},
-        showError: (AppException) -> Boolean = {appException-> true},
-        isShowDialog: Boolean = false,
+        showError: (AppException) -> Boolean = { true },
+        reLogin: () -> Boolean = { true },
+        isShowDialog: Boolean = true,
         loadingMessage: String = "请求网络中...",
         onTokenOut: ((String) -> Unit)? = null
 ): Job {
@@ -132,15 +134,21 @@ fun <T> BaseViewModel.request(
             loadingChange.dismissDialog.postValue(false)
             runCatching {
                 //校验请求结果码是否正确，不正确会抛出异常走下面的onFailure
-                executeResponse(it) { t ->
+                executeResponse(it, { t ->
                     success(t)
-                }
+                }, {
+                    val isLogin = reLogin()
+                    if(isLogin){
+                        hasLogin.reLogin.postValue("ReLogin")
+                    }
+                })
             }.onFailure { e ->
                 //打印错误消息
+                Timber.w(e)
                 //失败回调
                 val appException = ExceptionHandle.handleException(e)
                 error(appException)
-                if(showError(appException)){
+                if (showError(appException)) {
                     showErrorMessage.showErrorToast.postValue(appException.errorMsg)
                 }
             }
@@ -148,10 +156,11 @@ fun <T> BaseViewModel.request(
             //网络请求异常 关闭弹窗
             loadingChange.dismissDialog.postValue(false)
             //打印错误消息
+            Timber.w(it)
             //失败回调
             val appException = ExceptionHandle.handleException(it)
             error(appException)
-            if(showError(appException)){
+            if (showError(appException)) {
                 showErrorMessage.showErrorToast.postValue(appException.errorMsg)
             }
         }
@@ -199,12 +208,16 @@ fun <T> BaseViewModel.requestNoCheck(
  */
 suspend fun <T> executeResponse(
         response: BaseResponse<T>,
-        success: suspend CoroutineScope.(T?) -> Unit
-) {
+        success: suspend CoroutineScope.(T?) -> Unit,
+        reLogin: () -> Unit = {}
+        ) {
     coroutineScope {
         when {
             response.isSuccess() -> {
                 success(response.getResponseData())
+            }
+            response.reLogin() -> {
+                reLogin()
             }
             else -> {
                 throw AppException(

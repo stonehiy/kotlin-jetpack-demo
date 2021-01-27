@@ -4,7 +4,6 @@ import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
-import me.hgj.jetpackmvvm.base.activity.BaseVmActivity
 
 /**
  * 描述　: 包含ViewModel 和Databind ViewModelActivity基类，把ViewModel 和Databind注入进来了
