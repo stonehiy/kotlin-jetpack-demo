@@ -5,6 +5,7 @@ import android.os.Bundle
 import io.github.stonehiy.lib.core.activity.BaseVmDbActivity
 import io.github.stonehiy.lib.core.appContext
 import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
+import io.github.stonehiy.lib.ext.toast
 import io.github.stonehiy.lib.util.ToastUtil
 
 /**
@@ -19,11 +20,11 @@ abstract class CoreActivity<VM : BaseViewModel, DB : ViewDataBinding> : BaseVmDb
     abstract  override fun initView(savedInstanceState: Bundle?)
 
     override fun showLoading(message: String?) {
-        ToastUtil.show(message)
+        toast(message)
     }
 
     override fun dismissLoading() {
-        ToastUtil.show("dismissLoading")
+        toast("dismissLoading")
     }
 
     override fun createObserver() {

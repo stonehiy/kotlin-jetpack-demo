@@ -5,7 +5,10 @@ import android.widget.Toast
 import io.github.stonehiy.lib.core.appContext
 import timber.log.Timber
 
-
+/**
+ * 请使用ToastExt.kt
+ */
+@Deprecated("")
 class ToastUtil private constructor() {
     companion object {
 

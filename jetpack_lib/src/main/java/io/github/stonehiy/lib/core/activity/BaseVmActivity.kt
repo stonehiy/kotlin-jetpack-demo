@@ -34,7 +34,6 @@ abstract class BaseVmActivity<VM : BaseViewModel> : AppCompatActivity() {
     abstract fun reLogin()
 
     protected fun showError(message: String?) {
-        ToastUtil.show(message)
     }
 
 
