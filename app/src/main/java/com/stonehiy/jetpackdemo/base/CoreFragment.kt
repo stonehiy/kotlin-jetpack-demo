@@ -3,7 +3,7 @@ package com.stonehiy.jetpackdemo.base
 import android.databinding.ViewDataBinding
 import android.os.Bundle
 import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
-import me.hgj.jetpackmvvm.base.fragment.BaseVmDbFragment
+import io.github.stonehiy.lib.core.fragment.BaseVmDbFragment
 
 /**
  * 描述　: 你项目中的Fragment基类，在这里实现显示弹窗，吐司，还有自己的需求操作 ，如果不想用Databind，请继承

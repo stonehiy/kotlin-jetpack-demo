@@ -1,4 +1,4 @@
-package me.hgj.jetpackmvvm.base.fragment
+package io.github.stonehiy.lib.core.fragment
 
 import android.databinding.DataBindingUtil
 import android.databinding.ViewDataBinding
@@ -6,7 +6,6 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import io.github.stonehiy.lib.core.fragment.BaseVmFragment
 
 import io.github.stonehiy.lib.core.viewmodel.BaseViewModel
 
